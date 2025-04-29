@@ -1,0 +1,25 @@
+server:
+  port: 9002
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          products-client-client-credentials:
+            provider: spring
+            client-id: products-client
+            client-secret: secret
+            authorization-grant-type: client_credentials
+            client-name: products-client-client-credentials
+            scope: products.read
+        provider:
+          spring:
+            issuer-uri: http://localhost:9000 # // try to replace it with eureka discovery alternative : "http://STS-SPRING-BOOT-AUTHORIZATION-SERVER"
