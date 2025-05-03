@@ -5,6 +5,7 @@ import static org.springframework.security.oauth2.client.web.reactive.function.c
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,12 +18,15 @@ public class ProductController {
 
     @Autowired
     private WebClient webClient;
+    
+    @Value("${params.clients.resourceUri:Config Server is not working. Please check...}")
+    private String resourceUri; // sts-spring-boot-resource-server uri.
 
     @GetMapping(value = "/products-view")
     public List<Product> getProducts() {
         return this.webClient
                 .get()
-                .uri("http://localhost:7773/products")
+                .uri(resourceUri + "/products")
                 .attributes(clientRegistrationId("products-client-client-credentials"))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<Product>>() {})
@@ -34,7 +38,7 @@ public class ProductController {
         
         String responseJson = this.webClient
         		.get()
-                .uri("http://localhost:7773/public/hello")
+                .uri(resourceUri + "/public/hello")
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
