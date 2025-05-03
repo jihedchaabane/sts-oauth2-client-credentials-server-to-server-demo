@@ -16,7 +16,7 @@
 	</parent>
 
 	<properties>
-		<spring-security-oauth2-authorization-server.version>0.2.0</spring-security-oauth2-authorization-server.version>
+		
 	</properties>
 
 	<dependencies>
@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-oauth2-authorization-server</artifactId>
-			<version>${spring-security-oauth2-authorization-server.version}</version>
+			<version>0.2.0</version>
 		</dependency>
 
 
