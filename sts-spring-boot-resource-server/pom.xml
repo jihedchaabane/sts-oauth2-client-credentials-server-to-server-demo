@@ -12,7 +12,6 @@
 		<groupId>com.chj.gr</groupId>
 		<artifactId>sts-oauth2-client-credentials-server-to-server-demo</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath />
 	</parent>
 	
 	<properties>
