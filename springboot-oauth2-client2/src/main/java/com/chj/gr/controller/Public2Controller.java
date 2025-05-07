@@ -1,4 +1,4 @@
-package com.chj.gr.resource;
+package com.chj.gr.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -6,10 +6,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/public")
-public class PublicController {
+public class Public2Controller {
 
-	@GetMapping("/hello")
-    public String getProducts() {
-        return "Hello for NOT secured endpoint";
+    @GetMapping("/hello")
+    public String hello() {
+    	
+        return "Hello from PUBLIC client2..";
     }
 }

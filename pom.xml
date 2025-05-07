@@ -31,6 +31,10 @@
 		<module>sts-spring-boot-authorization-server</module>
         <module>sts-spring-boot-resource-server</module>
 		<module>sts-spring-boot-external-webclient-consumer</module>
+		
+		<module>springboot-oauth2-client1</module>
+		<module>springboot-oauth2-client2</module>
+		<module>springboot-oauth2-external-resttemplate-consumer</module>
     </modules>
 	
 </project>

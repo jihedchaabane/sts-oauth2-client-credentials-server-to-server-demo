@@ -26,7 +26,7 @@ public class ProductController {
     public List<Product> getProducts() {
         return this.webClient
                 .get()
-                .uri(resourceUri + "/products")
+                .uri(resourceUri + "/api/secure/products")
                 .attributes(clientRegistrationId("products-client-client-credentials"))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<Product>>() {})
@@ -38,7 +38,7 @@ public class ProductController {
         
         String responseJson = this.webClient
         		.get()
-                .uri(resourceUri + "/public/hello")
+                .uri(resourceUri + "/api/public/hello")
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();

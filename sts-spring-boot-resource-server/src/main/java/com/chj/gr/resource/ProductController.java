@@ -12,7 +12,7 @@ import com.chj.gr.model.Product;
 @RestController
 public class ProductController {
 
-    @GetMapping("/products")
+    @GetMapping("/api/secure/products")
     @PreAuthorize("hasAuthority('SCOPE_products.read')")
     public List<Product> getProducts() {
         return Arrays.asList(

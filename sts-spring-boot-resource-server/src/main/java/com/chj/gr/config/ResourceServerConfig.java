@@ -13,7 +13,7 @@ public class ResourceServerConfig {
         http
                 .authorizeRequests()
                 
-                .mvcMatchers("/public/**").permitAll()
+                .mvcMatchers("/api/public/**").permitAll()
                 .mvcMatchers("/actuator/**").permitAll()
 //                .mvcMatchers("/products/**").access("hasAuthority('SCOPE_products.read')")
                 /**
