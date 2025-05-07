@@ -76,7 +76,7 @@ public class Ms3CallProtectedController {
     }
     
     @GetMapping("/ms1/api/secure/call-client2")
-    public String callMs2Endpoint() {
+    public String callMs11Endpoint() {
         String token = getAccessToken(ms1ClientId, ms1ClientSecret);
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
@@ -95,9 +95,29 @@ public class Ms3CallProtectedController {
     /**
      * MS2
      */
-    @GetMapping("/ms2/api/secure/cl1")
-    public String callMs12Endpoint() {
+    @GetMapping("/ms2/api/secure/hello")
+    public String callMs2Endpoint() {
         String token = getAccessToken(ms1ClientId, ms1ClientSecret);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                apiGatewayUrl + "/ms2/api/secure/hello",
+                HttpMethod.GET,
+                entity,
+                String.class
+        );
+        return response.getBody();
+    }
+    
+    /**
+     * Call ms1 avec (ms2ClientId, ms2ClientSecret).
+     * 
+     */
+    @GetMapping("/ms1/api/secure/cl2")
+    public String callMs12Endpoint() {
+        String token = getAccessToken(ms2ClientId, ms2ClientSecret);
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
 
@@ -111,15 +131,19 @@ public class Ms3CallProtectedController {
         return response.getBody();
     }
     
-    @GetMapping("/ms2/api/secure/cl2")
+    /**
+     * Call ms2 avec (ms1ClientId, ms1ClientSecret).
+     * 
+     */
+    @GetMapping("/ms2/api/secure/cl1")
     public String callMs123Endpoint() {
-        String token = getAccessToken(ms2ClientId, ms2ClientSecret);
+        String token = getAccessToken(ms1ClientId, ms1ClientSecret);
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                apiGatewayUrl + "/ms1/api/secure/call-client2",
+                apiGatewayUrl + "/ms2/api/secure/hello",
                 HttpMethod.GET,
                 entity,
                 String.class
