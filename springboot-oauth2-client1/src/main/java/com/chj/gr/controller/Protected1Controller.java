@@ -61,7 +61,7 @@ public class Protected1Controller {
         // Appeler l'endpoint sécurisé de client2
         try {
             ResponseEntity<String> response = restTemplate.exchange(
-                    "http://localhost:8082/api/secure/hello",
+                    "http://springboot-oauth2-client2/api/secure/hello",
 //            		"http://Z-CLIENT2/api/secure",  // didn't work yet, i need to check it..
                     HttpMethod.GET,
                     entity,
