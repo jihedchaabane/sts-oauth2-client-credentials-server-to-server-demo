@@ -1,7 +1,7 @@
 package com.chj.gr.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,25 +22,25 @@ public class Ms3CallProtectedController {
 	@Autowired
     private RestTemplate restTemplate;
 
-//    @Value("${authorization.server.url}")
-    private String authServerUrl = "http://localhost:8764/oauth2/token";
-//  @Value("${api.gateway.url}")
-  private String apiGatewayUrl = "http://localhost:7766";
+    @Value("${authorization.server.url}")
+    private String issuerUri;
+    
+    @Value("${api.gateway.url}")
+    private String apiGatewayUrl;
   
-  
-  
-//    @Value("${authorization.ms1.client-id}")
-    private String ms1ClientId = "client1";
-//    @Value("${authorization.ms1.client-secret}")
-    private String ms1ClientSecret = "secret1";
+    @Value("${authorization.ms1.clientId}")
+    private String ms1ClientId;
+    
+    @Value("${authorization.ms1.clientSecret}")
+    private String ms1ClientSecret;
     
     
     
-//  @Value("${authorization.ms2.client-id}")
-    private String ms2ClientId = "client2";
+    @Value("${authorization.ms2.clientId}")
+    private String ms2ClientId;
 
-//  @Value("${authorization.ms2.client-secret}")
-    private String ms2ClientSecret = "secret2";
+    @Value("${authorization.ms2.clientSecret}")
+    private String ms2ClientSecret;
 
 
     private String getAccessToken(String clientId, String clientSecret) {
@@ -52,7 +52,7 @@ public class Ms3CallProtectedController {
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
 
-        ResponseEntity<TokenResponse> response = restTemplate.postForEntity(authServerUrl, request, TokenResponse.class);
+        ResponseEntity<TokenResponse> response = restTemplate.postForEntity(issuerUri, request, TokenResponse.class);
         return response.getBody().getAccess_token();
     }
 
