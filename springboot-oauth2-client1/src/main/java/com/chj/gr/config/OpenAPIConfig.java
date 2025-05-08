@@ -90,7 +90,7 @@ public class OpenAPIConfig {
 	                			.type(SecurityScheme.Type.OAUTH2)
 	                			.flows(new OAuthFlows()
 	                					.clientCredentials(new OAuthFlow()
-	                							.tokenUrl(issuerUri)
+	                							.tokenUrl(issuerUri.concat("/oauth2/token"))
 	                							.scopes(new io.swagger.v3.oas.models.security.Scopes()
 	                									.addString("read", "Read access")
 	                									.addString("write", "Write access")
