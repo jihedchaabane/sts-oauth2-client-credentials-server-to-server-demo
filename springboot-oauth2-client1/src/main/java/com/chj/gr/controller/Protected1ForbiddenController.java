@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/secure")
-public class Protected1WrongScopeController {
+public class Protected1ForbiddenController {
 
 	/**
 	 * Provide a wrong scope.

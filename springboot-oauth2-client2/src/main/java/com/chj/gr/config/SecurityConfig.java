@@ -12,21 +12,34 @@ import org.springframework.web.client.RestTemplate;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    	http
-		        .authorizeRequests()
-		        .antMatchers("/actuator/**").permitAll()
-		        .antMatchers("/api/public/**").permitAll()
-		        .antMatchers("/swagger-ui/**", "/v2/api-docs/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll()
-		        .anyRequest().authenticated()
-	        .and()
-            	.oauth2ResourceServer(oauth2 -> oauth2
-            		.jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwtAuthenticationConverter()))
-            	);
-
-        return http.build();
-    }
+	    @Bean
+	    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	    	http
+	        .authorizeRequests()
+	        .antMatchers("/actuator/**").permitAll()
+	        .antMatchers("/api/public/**").permitAll()
+	        .antMatchers("/swagger-ui/**", "/v2/api-docs/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll()
+	        
+	//        .antMatchers("/api/secure/**").access("hasAuthority('SCOPE_read')")
+	        /**
+	        @Configuration
+	        @EnableGlobalMethodSecurity(
+	        		prePostEnabled = true	// enables @preAuthorize and @PostAuathorize
+	        		, securedEnabled = true // enables @secured
+	        		, jsr250Enabled = true	// enables @RolesAllowed (Ensure JSR-250 annotations are enabled)
+	        )
+	        public class AnnotationSecurityConfig { }
+	        */
+	        
+	        
+	        .anyRequest().authenticated()
+	    .and()
+	    	.oauth2ResourceServer(oauth2 -> oauth2
+	    		.jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwtAuthenticationConverter()))
+	    	);
+	
+	return http.build();
+	}
 
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {

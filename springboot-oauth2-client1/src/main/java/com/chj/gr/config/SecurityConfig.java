@@ -20,7 +20,6 @@ public class SecurityConfig {
 		        .antMatchers("/api/public/**").permitAll()
 		        .antMatchers("/swagger-ui/**", "/v2/api-docs/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll()
 		        
-		        
 //		        .antMatchers("/api/secure/**").access("hasAuthority('SCOPE_read')")
 		        /**
 		        @Configuration

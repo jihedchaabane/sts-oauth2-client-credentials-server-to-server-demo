@@ -16,7 +16,9 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.chj.gr.exceptions.CustomException;
+import com.chj.gr.model.Token;
 import com.chj.gr.model.TokenResponse;
+import com.chj.gr.utilities.JwtTokenValidator;
 
 @RestController
 @RequestMapping("/call/secure")
@@ -46,7 +48,6 @@ public class Ms3CallProtectedController {
     @Value("${authorization.ms1.scopes}")
     private String ms2Scopes;
 
-
     private String getAccessToken(String clientId, String clientSecret, String scopes) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -57,9 +58,18 @@ public class Ms3CallProtectedController {
         body.add("scope", scopes);
         
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
+		try {
+			ResponseEntity<TokenResponse> tokenResponse = restTemplate.postForEntity(issuerUri, request,
+					TokenResponse.class);
 
-        ResponseEntity<TokenResponse> response = restTemplate.postForEntity(issuerUri, request, TokenResponse.class);
-        return response.getBody().getAccess_token();
+			if (tokenResponse == null || tokenResponse.getBody() == null) {
+				throw new RuntimeException("Invalid token response: Access token is null");
+			}
+		} catch (HttpClientErrorException e) {
+			throw new RuntimeException(
+					"Failed to obtain access token: " + e.getStatusCode() + " - " + e.getResponseBodyAsString(), e);
+		}
+        return null;
     }
 
     /**
