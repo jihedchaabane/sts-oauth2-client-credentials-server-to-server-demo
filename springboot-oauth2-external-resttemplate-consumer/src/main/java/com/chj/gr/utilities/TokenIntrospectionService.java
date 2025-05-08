@@ -2,7 +2,6 @@ package com.chj.gr.utilities;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -20,7 +19,7 @@ public class TokenIntrospectionService {
 	
 	@Autowired
     private RestTemplate restTemplate;
-	@Value("${authorization.server.url}")
+	@Value("${params.oauth2.issuerUri}")
     private String issuerUri;
 	
 	/**
@@ -36,10 +35,9 @@ public class TokenIntrospectionService {
         body.add("token", accessToken);
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
-
         try {
             ResponseEntity<TokenIntrospectionResponse> response = restTemplate.postForEntity(
-            	"http://localhost:8764/oauth2/introspect", // URL de l'endpoint d'introspection
+            		issuerUri.concat("/oauth2/introspect"), // URL de l'endpoint d'introspection
                 request,
                 TokenIntrospectionResponse.class
             );
