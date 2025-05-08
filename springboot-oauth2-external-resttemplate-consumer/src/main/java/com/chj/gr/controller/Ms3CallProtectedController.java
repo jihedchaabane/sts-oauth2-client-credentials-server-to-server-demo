@@ -16,9 +16,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.chj.gr.exceptions.CustomException;
-import com.chj.gr.model.Token;
 import com.chj.gr.model.TokenResponse;
-import com.chj.gr.utilities.JwtTokenValidator;
 
 @RestController
 @RequestMapping("/call/secure")
