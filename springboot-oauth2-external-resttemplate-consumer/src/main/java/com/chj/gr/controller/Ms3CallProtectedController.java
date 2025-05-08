@@ -24,7 +24,7 @@ public class Ms3CallProtectedController {
 
 	@Autowired
     private RestTemplate restTemplate;
-
+	
     @Value("${authorization.server.url}")
     private String issuerUri;
     
@@ -43,14 +43,13 @@ public class Ms3CallProtectedController {
     private String ms2ClientId;
     @Value("${authorization.ms2.clientSecret}")
     private String ms2ClientSecret;
-    @Value("${authorization.ms1.scopes}")
+    @Value("${authorization.ms2.scopes}")
     private String ms2Scopes;
 
     private String getAccessToken(String clientId, String clientSecret, String scopes) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.setBasicAuth(clientId, clientSecret);
-
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "client_credentials");
         body.add("scope", scopes);
@@ -63,12 +62,13 @@ public class Ms3CallProtectedController {
 			if (tokenResponse == null || tokenResponse.getBody() == null) {
 				throw new RuntimeException("Invalid token response: Access token is null");
 			}
+			return tokenResponse.getBody().getAccess_token();
 		} catch (HttpClientErrorException e) {
 			throw new RuntimeException(
 					"Failed to obtain access token: " + e.getStatusCode() + " - " + e.getResponseBodyAsString(), e);
 		}
-        return null;
     }
+    
 
     /**
      * MS1
