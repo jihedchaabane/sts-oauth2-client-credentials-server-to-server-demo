@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -30,26 +31,29 @@ public class Ms3CallProtectedController {
   
     @Value("${authorization.ms1.clientId}")
     private String ms1ClientId;
-    
     @Value("${authorization.ms1.clientSecret}")
     private String ms1ClientSecret;
-    
+    @Value("${authorization.ms1.scopes}")
+    private String ms1Scopes;
     
     
     @Value("${authorization.ms2.clientId}")
     private String ms2ClientId;
-
     @Value("${authorization.ms2.clientSecret}")
     private String ms2ClientSecret;
+    @Value("${authorization.ms1.scopes}")
+    private String ms2Scopes;
 
 
-    private String getAccessToken(String clientId, String clientSecret) {
+    private String getAccessToken(String clientId, String clientSecret, String scopes) {
         HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.setBasicAuth(clientId, clientSecret);
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "client_credentials");
-
+        body.add("scope", scopes);
+        
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
 
         ResponseEntity<TokenResponse> response = restTemplate.postForEntity(issuerUri, request, TokenResponse.class);
@@ -59,9 +63,10 @@ public class Ms3CallProtectedController {
     /**
      * MS1
      */
+    /** ==> DOIT FONCTIONNER */
     @GetMapping("/ms1/api/secure/token")
-    public String callMs1Endpoint() {
-        String token = getAccessToken(ms1ClientId, ms1ClientSecret);
+    public String callMs11Endpoint() {
+        String token = getAccessToken(ms1ClientId, ms1ClientSecret, ms1Scopes);
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
 
@@ -74,10 +79,11 @@ public class Ms3CallProtectedController {
         );
         return response.getBody();
     }
-    
+
+    /** ==> DOIT FONCTIONNER */
     @GetMapping("/ms1/api/secure/call-client2")
-    public String callMs11Endpoint() {
-        String token = getAccessToken(ms1ClientId, ms1ClientSecret);
+    public String callMs12Endpoint() {
+        String token = getAccessToken(ms1ClientId, ms1ClientSecret, ms1Scopes);
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
 
@@ -90,14 +96,14 @@ public class Ms3CallProtectedController {
         );
         return response.getBody();
     }
-    
 
     /**
      * MS2
      */
+    /** ==> DOIT FONCTIONNER */
     @GetMapping("/ms2/api/secure/hello")
-    public String callMs2Endpoint() {
-        String token = getAccessToken(ms1ClientId, ms1ClientSecret);
+    public String callMs21Endpoint() {
+        String token = getAccessToken(ms2ClientId, ms2ClientSecret, ms2Scopes);
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
 
@@ -113,17 +119,17 @@ public class Ms3CallProtectedController {
     
     /**
      * Call ms1 avec (ms2ClientId, ms2ClientSecret).
-     * 
+     * ==> NE DOIT PAS FONCTIONNER car 'read' <> 'read write'.
      */
-    @GetMapping("/ms1/api/secure/cl2")
-    public String callMs12Endpoint() {
-        String token = getAccessToken(ms2ClientId, ms2ClientSecret);
+    @GetMapping("/ms1/api/secure/withClient2")
+    public String callMs13Endpoint() {
+        String token = getAccessToken(ms2ClientId, ms2ClientSecret, ms2Scopes);
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                apiGatewayUrl + "/ms1/api/secure/call-client2",
+                apiGatewayUrl + "/ms1/api/secure/token",
                 HttpMethod.GET,
                 entity,
                 String.class
@@ -133,11 +139,51 @@ public class Ms3CallProtectedController {
     
     /**
      * Call ms2 avec (ms1ClientId, ms1ClientSecret).
-     * 
+     * ==> FONCTIONNE car 'read' est inclut dans 'read write'.
      */
-    @GetMapping("/ms2/api/secure/cl1")
-    public String callMs123Endpoint() {
-        String token = getAccessToken(ms1ClientId, ms1ClientSecret);
+    @GetMapping("/ms2/api/secure/withClient1")
+    public String callMs22Endpoint() {
+        String token = getAccessToken(ms1ClientId, ms1ClientSecret, ms1Scopes);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                apiGatewayUrl + "/ms2/api/secure/hello",
+                HttpMethod.GET,
+                entity,
+                String.class
+        );
+        return response.getBody();
+    }
+    
+    /**
+     * Call ms1 avec des faux scopes.
+     * ==> NE DOIT PAS FONCTIONNER.
+     */
+    @GetMapping("/ms1/api/secure/token/wrong/scopes")
+    public String callMs1WrongScopesEndpoint() {
+        String token = getAccessToken(ms1ClientId, ms1ClientSecret, "scope1 scope2");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                apiGatewayUrl + "/ms1/api/secure/token",
+                HttpMethod.GET,
+                entity,
+                String.class
+        );
+        return response.getBody();
+    }
+    
+    /**
+     * Call ms2 avec des faux scopes.
+     * ==> NE DOIT PAS FONCTIONNER.
+     */
+    @GetMapping("/ms2/api/secure/hello/wrong/scopes")
+    public String callMs2WrongScopesEndpoint() {
+        String token = getAccessToken(ms2ClientId, ms2ClientSecret, "scope3");
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
 

@@ -1,6 +1,7 @@
 package com.chj.gr.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +15,8 @@ public class Ms3CallPublicController {
 	@Autowired
 	private RestTemplate restTemplate;
 
-//  @Value("${api.gateway.url}")
-	private String apiGatewayUrl = "http://localhost:7766";
+	@Value("${api.gateway.url}")
+	private String apiGatewayUrl;
 
 	/**
 	 * MS1
