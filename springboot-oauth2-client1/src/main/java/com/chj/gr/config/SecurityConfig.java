@@ -21,7 +21,18 @@ public class SecurityConfig {
 		        .antMatchers("/swagger-ui/**", "/v2/api-docs/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll()
 		        
 		        
-//		        .antMatchers("/api/secure").access("hasAuthority('SCOPE_read')") // not working
+//		        .antMatchers("/api/secure/**").access("hasAuthority('SCOPE_read')")
+		        /**
+		        @Configuration
+		        @EnableGlobalMethodSecurity(
+		        		prePostEnabled = true	// enables @preAuthorize and @PostAuathorize
+		        		, securedEnabled = true // enables @secured
+		        		, jsr250Enabled = true	// enables @RolesAllowed (Ensure JSR-250 annotations are enabled)
+		        )
+		        public class AnnotationSecurityConfig { }
+		        */
+		        
+		        
 		        .anyRequest().authenticated()
 	        .and()
             	.oauth2ResourceServer(oauth2 -> oauth2

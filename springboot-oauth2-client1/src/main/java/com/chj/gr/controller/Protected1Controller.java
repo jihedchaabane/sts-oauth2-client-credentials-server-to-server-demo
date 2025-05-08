@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/api/secure")
-//@PreAuthorize("hasAuthority('SCOPE_read')") // not working
+@PreAuthorize("hasAuthority('SCOPE_read')")
 public class Protected1Controller {
 
 	@GetMapping("/token")

@@ -12,8 +12,10 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import com.chj.gr.exceptions.CustomException;
 import com.chj.gr.model.TokenResponse;
 
 @RestController
@@ -96,11 +98,33 @@ public class Ms3CallProtectedController {
         );
         return response.getBody();
     }
+    
+    /** ==> NE DOIT PAS FONCTIONNER */
+    @GetMapping("/ms1/api/secure/forbidden")
+    public String callMs1Forbidden() {
+        String token = getAccessToken(ms1ClientId, ms1ClientSecret, ms1Scopes);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<String> response = null;
+        try {
+	        response = restTemplate.exchange(
+	                apiGatewayUrl + "/ms1/api/secure/forbidden",
+	                HttpMethod.GET,
+	                entity,
+	                String.class
+	        );
+        } catch (HttpClientErrorException e) {
+        	throw new CustomException("Failed to obtain access token: " + e.getStatusCode() + " - " + e.getResponseBodyAsString(), e);
+        }
+        return response.getBody();
+    }
 
     /**
      * MS2
      */
-    /** ==> DOIT FONCTIONNER */
+    /** ==> DOIT FONCTIONNER !!!!!!!!!!!!!!!*/
     @GetMapping("/ms2/api/secure/hello")
     public String callMs21Endpoint() {
         String token = getAccessToken(ms2ClientId, ms2ClientSecret, ms2Scopes);
