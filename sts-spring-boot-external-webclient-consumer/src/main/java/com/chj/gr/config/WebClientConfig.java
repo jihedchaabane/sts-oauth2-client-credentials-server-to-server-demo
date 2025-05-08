@@ -1,4 +1,4 @@
-package com.chj.gr.conf;
+package com.chj.gr.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -20,7 +20,11 @@ public class ProductController {
     private WebClient webClient;
     
     @Value("${params.clients.resourceUri:Config Server is not working. Please check...}")
-    private String resourceUri; // sts-spring-boot-resource-server uri.
+    /**
+     * - "sts-spring-boot-resource-server uri".
+     * @TODO "springboot-conf-gateway-api-oauth2" uri.
+     */
+    private String resourceUri;// "sts-spring-boot-resource-server" uri.
 
     @GetMapping(value = "/products-view")
     public List<Product> getProducts() {

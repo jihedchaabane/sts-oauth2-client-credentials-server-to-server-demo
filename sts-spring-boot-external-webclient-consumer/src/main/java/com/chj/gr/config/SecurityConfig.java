@@ -1,4 +1,4 @@
-package com.chj.gr.conf;
+package com.chj.gr.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +13,8 @@ public class SecurityConfig {
         http
                 .authorizeRequests()
                 .antMatchers("/products-view/**").permitAll()
-        		.antMatchers("/public/**").permitAll();
+        		.antMatchers("/public/**").permitAll()
+        		.antMatchers("/swagger-ui/**", "/v2/api-docs/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll();
         return http.build();
     }
 }

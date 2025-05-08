@@ -61,8 +61,11 @@ public class Protected1Controller {
         // Appeler l'endpoint sécurisé de client2
         try {
             ResponseEntity<String> response = restTemplate.exchange(
-                    "http://SPRINGBOOT-OAUTH2-CLIENT2/api/secure/hello",
-//            		"http://SPRINGBOOT-OAUTH2-CLIENT2/api/secure",  // didn't work yet, i need to check it..
+                    "http://localhost:8082/api/secure/hello",
+                    /**
+                     * @TODO didn't work yet, i need to check it..
+                     */
+//            		"http://SPRINGBOOT-OAUTH2-CLIENT2/api/secure/hello",
                     HttpMethod.GET,
                     entity,
                     String.class

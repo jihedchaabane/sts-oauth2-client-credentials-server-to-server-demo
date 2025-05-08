@@ -15,6 +15,7 @@ public class ResourceServerConfig {
                 
                 .mvcMatchers("/api/public/**").permitAll()
                 .mvcMatchers("/actuator/**").permitAll()
+                .mvcMatchers("/swagger-ui/**", "/v2/api-docs/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll()
 //                .mvcMatchers("/products/**").access("hasAuthority('SCOPE_products.read')")
                 /**
                  * Replaced by com.tb.config.AnnotationSecurityConfig.java

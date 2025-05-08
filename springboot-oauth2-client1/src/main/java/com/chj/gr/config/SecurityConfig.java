@@ -1,4 +1,4 @@
-package com.chj.gr.conf;
+package com.chj.gr.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +18,10 @@ public class SecurityConfig {
 		        .authorizeRequests()
 		        .antMatchers("/actuator/**").permitAll()
 		        .antMatchers("/api/public/**").permitAll()
+		        .antMatchers("/swagger-ui/**", "/v2/api-docs/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll()
+		        
+		        
+//		        .antMatchers("/api/secure").access("hasAuthority('SCOPE_read')") // not working
 		        .anyRequest().authenticated()
 	        .and()
             	.oauth2ResourceServer(oauth2 -> oauth2
