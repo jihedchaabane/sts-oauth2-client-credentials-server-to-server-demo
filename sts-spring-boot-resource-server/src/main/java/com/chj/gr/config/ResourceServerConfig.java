@@ -18,7 +18,7 @@ public class ResourceServerConfig {
                 .mvcMatchers("/swagger-ui/**", "/v2/api-docs/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll()
 //                .mvcMatchers("/products/**").access("hasAuthority('SCOPE_products.read')")
                 /**
-                 * Replaced by com.tb.config.AnnotationSecurityConfig.java
+                 * Replaced by com.chj.gr.config.AnnotationSecurityConfig.java
                    @EnableGlobalMethodSecurity(
 						prePostEnabled = true	// enables @PreAuthorize and @PostAuathorize
 						, securedEnabled = true // enables @Secured
