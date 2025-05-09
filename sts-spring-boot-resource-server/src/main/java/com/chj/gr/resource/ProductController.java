@@ -12,14 +12,25 @@ import com.chj.gr.model.Product;
 @RestController
 public class ProductController {
 
-    @GetMapping("/api/secure/products")
+    @GetMapping("/api/secure/products/read")
     @PreAuthorize("hasAuthority('SCOPE_products.read')")
-    public List<Product> getProducts() {
+    public List<Product> readScope() {
         return Arrays.asList(
                 new Product[] {
-                		new Product(1, "I Pad", 10),
-                        new Product(2, "I Phone", 12),
-                        new Product(3, "MacBook", 15)
+                		new Product(1, "Product READ_1", 10),
+                        new Product(2, "Product READ_1", 12),
+                        new Product(3, "Product READ_1", 15)
+                });
+    }
+    
+    @GetMapping("/api/secure/products/write")
+    @PreAuthorize("hasAuthority('SCOPE_products.write')")
+    public List<Product> writeScope() {
+        return Arrays.asList(
+                new Product[] {
+                		new Product(1, "Product WRITE_1", 10),
+                        new Product(2, "Product WRITE_2", 12),
+                        new Product(3, "Product WRITE_3", 15)
                 });
     }
 }

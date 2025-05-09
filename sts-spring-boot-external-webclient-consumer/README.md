@@ -1,4 +1,4 @@
-q# z-springboot-hello-world-service
+# sts-spring-boot-external-webclient-consumer
 -----------------------------------------------------
 IN "10.0.0.137" do:
 -----------------------------------------------------
@@ -16,8 +16,5 @@ sudo firewall-cmd --list-ports
 sudo firewall-cmd --list-all
 -----------------------------------------------------
 http://10.0.0.137:7774/swagger-ui/index.html
-
-curl -X 'GET' 'http://10.0.0.137:7774/products-view' -H 'accept: */*'
-curl -X 'GET' 'http://10.0.0.137:7774/public' -H 'accept: */*'
 
 -----------------------------------------------------

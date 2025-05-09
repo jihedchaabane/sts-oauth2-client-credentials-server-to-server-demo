@@ -41,6 +41,12 @@ public class OpenAPIConfig {
 	@Value("${spring.application.name}")
 	private String artifact;
 
+	@Value("${params.oauth2.issuerUri}")
+	private String issuerUri;
+	
+	@Value("${params.oauth2.scopes}")
+	private String scopes;
+
 	@Bean
 	public OpenAPI myOpenAPI() {
 		Server localServer = new Server();
@@ -74,10 +80,16 @@ public class OpenAPIConfig {
 				.termsOfService("https://www.jihed.com")
 				.license(mitLicense);
 		
-		/**
-		 * 
-		 */
-	     return new OpenAPI()
+		io.swagger.v3.oas.models.security.Scopes swaggerScopes = new io.swagger.v3.oas.models.security.Scopes();
+		if (this.scopes != null && !this.scopes.isEmpty()) {
+			String array[] = this.scopes.split(",");
+			for (int i = 0; i < array.length; i++) {
+				swaggerScopes.addString(
+						array[i], new StringBuilder(array[i].toUpperCase()).append(" access:"
+				).toString());
+			}
+		}
+	    return new OpenAPI()
 	        	.info(info)
 	        	.servers(List.of(localServer, devServer, homolServer, prodServer))
 	            .addSecurityItem(new SecurityRequirement().addList("oauth2"))
@@ -87,11 +99,8 @@ public class OpenAPIConfig {
 	                			.type(SecurityScheme.Type.OAUTH2)
 	                			.flows(new OAuthFlows()
 	                					.clientCredentials(new OAuthFlow()
-	                							.tokenUrl("http://localhost:8764/oauth2/token")
-	                							.scopes(new io.swagger.v3.oas.models.security.Scopes()
-	                									.addString("read", "Read access")
-	                									.addString("write", "Write access")
-	                							)
+	                							.tokenUrl(issuerUri.concat("/oauth2/token"))
+	                							.scopes(swaggerScopes)
 	                					)
 	                			)
 	                )

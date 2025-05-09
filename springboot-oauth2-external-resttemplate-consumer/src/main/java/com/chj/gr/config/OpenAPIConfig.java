@@ -35,6 +35,9 @@ public class OpenAPIConfig {
 
 	@Value("${spring.application.name}")
 	private String artifact;
+	
+	@Value("${params.oauth2.scopes}")
+	private String scopes;
 
 	@Bean
 	public OpenAPI myOpenAPI() {
@@ -61,9 +64,13 @@ public class OpenAPIConfig {
 
 		License mitLicense = new License().name("MIT License").url("https://choosealicense.com/licenses/mit/");
 
-		Info info = new Info().title("Swagger Management API").version("0.0.1-SNAPSHOT").contact(contact)
+		Info info = new Info()
+				.title("Swagger Management API")
+				.version("0.0.1-SNAPSHOT")
+				.contact(contact)
 				.description("This API exposes endpoints to manage " + artifact.toUpperCase() + ", it requires SPRINGBOOT-CONF-GATEWAY-API-OAUTH2 to be UP.")
-				.termsOfService("https://www.jihed.com").license(mitLicense);
+				.termsOfService("https://www.jihed.com")
+				.license(mitLicense);
 
 		return new OpenAPI().info(info).servers(List.of(localServer, devServer, homolServer, prodServer));
 	}

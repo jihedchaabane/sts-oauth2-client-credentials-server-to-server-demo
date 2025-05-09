@@ -1,4 +1,4 @@
-q# z-springboot-hello-world-service
+# springboot-oauth2-external-resttemplate-consumer
 -----------------------------------------------------
 IN "10.0.0.137" do:
 -----------------------------------------------------
@@ -14,4 +14,7 @@ sudo firewall-cmd --reload
 
 sudo firewall-cmd --list-ports
 sudo firewall-cmd --list-all
+-----------------------------------------------------
+http://10.0.0.137:8083/swagger-ui/index.html
+
 -----------------------------------------------------

@@ -19,24 +19,49 @@ public class ProductController {
     @Autowired
     private WebClient webClient;
     
-    @Value("${params.clients.resourceUri:Config Server is not working. Please check...}")
     /**
      * - "sts-spring-boot-resource-server uri".
      * @TODO "springboot-conf-gateway-api-oauth2" uri.
      */
+    @Value("${params.clients.resourceUri1}")
     private String resourceUri;// "sts-spring-boot-resource-server" uri.
 
-    @GetMapping(value = "/products-view")
-    public List<Product> getProducts() {
+    /**
+     * Ce client n'a que le scope 'products.read' dans sa configuration.
+     * DOIT FONCTIONNER car "sts-spring-boot-resource-server/api/secure/products/read"
+     * 							==> @PreAuthorize("hasAuthority('SCOPE_products.read')")
+     */
+    @GetMapping(value = "/products-read")
+    public List<Product> readProducts() {
         return this.webClient
                 .get()
-                .uri(resourceUri + "/api/secure/products")
+                .uri(resourceUri + "/api/secure/products/read")
                 .attributes(clientRegistrationId("products-client-client-credentials"))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<Product>>() {})
                 .block();
     }
     
+    /**
+     * Ce client n'a que le scope 'products.read' dans sa configuration.
+     * NE DOIT PAS FONCTIONNER car "sts-spring-boot-resource-server/api/secure/products/write"
+     * 							==> @PreAuthorize("hasAuthority('SCOPE_products.write')")
+     */
+    @GetMapping(value = "/products-write")
+    public List<Product> writeProducts() {
+        return this.webClient
+                .get()
+                .uri(resourceUri + "/api/secure/products/write")
+                .attributes(clientRegistrationId("products-client-client-credentials"))
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<List<Product>>() {})
+                .block();
+    }
+    
+    /**
+     * DOIT FONCTIONNER car /public est permit toujours dans la configuration de sécurité 
+     * de 'sts-spring-boot-resource-server'.
+     */
     @GetMapping(value = "/public")
     public String getPublic() {
         
