@@ -25,7 +25,7 @@ public class Ms3CallProtectedMs1Controller {
     @Value("${authorization.server.url}")
     private String issuerUri;
     
-    @Value("${api.gateway.url}")
+    @Value("${params.gateway.uri}")
     private String apiGatewayUrl;
   
     @Value("${authorization.ms1.clientId}")

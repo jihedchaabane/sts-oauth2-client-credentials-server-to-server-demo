@@ -36,9 +36,6 @@ public class OpenAPIConfig {
 	@Value("${spring.application.name}")
 	private String artifact;
 	
-	@Value("${params.oauth2.scopes}")
-	private String scopes;
-
 	@Bean
 	public OpenAPI myOpenAPI() {
 		Server localServer = new Server();

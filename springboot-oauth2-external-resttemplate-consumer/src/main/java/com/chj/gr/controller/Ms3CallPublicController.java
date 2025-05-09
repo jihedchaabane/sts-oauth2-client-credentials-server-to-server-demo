@@ -15,7 +15,7 @@ public class Ms3CallPublicController {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	@Value("${api.gateway.url}")
+	@Value("${params.gateway.uri}")
 	private String apiGatewayUrl;
 
 	/**
