@@ -28,7 +28,7 @@ public class AccessTokenUtil {
         headers.setBasicAuth(clientId, clientSecret);
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "client_credentials");
-        body.add("scope", scopes);
+        body.add("scope", scopes.replaceAll(",", " "));
         
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
 		try {

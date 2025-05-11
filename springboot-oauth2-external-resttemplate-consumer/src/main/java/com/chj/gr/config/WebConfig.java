@@ -17,39 +17,27 @@ package com.chj.gr.config;
 //    }
 //}
 
-//
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.web.servlet.config.annotation.CorsRegistry;
-//import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-/**
- * 
- */
-//@Configuration
-//public class ForSwaggerAggregatorConfig implements WebMvcConfigurer {
-//	
-//    @Override
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/v3/api-docs/**")
-//                .allowedOrigins("http://localhost:8765")
-//                .allowedMethods("GET");
-//    }
-//}
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.chj.gr.properties.SwaggerParamsProperties;
 
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 	
-	@Value("${swagger.aggregator.cors.uri}")
-	private String swaggerAggregatorUri;		/** "gr-conf-swagger-aggregator". **/
-    @Override
+	/** "gr-conf-swagger-aggregator". **/
+	private SwaggerParamsProperties swaggerParamsProperties;
+	
+    public WebConfig(SwaggerParamsProperties swaggerParamsProperties) {
+		this.swaggerParamsProperties = swaggerParamsProperties;
+	}
+
+	@Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins(swaggerAggregatorUri)
+                .allowedOrigins(swaggerParamsProperties.getAggregator().getCors().getUri())
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
@@ -59,7 +47,7 @@ public class WebConfig implements WebMvcConfigurer {
          */
         // Configuration explicite pour les endpoints Actuator
         registry.addMapping("/actuator/**")
-                .allowedOrigins(swaggerAggregatorUri)
+                .allowedOrigins(swaggerParamsProperties.getAggregator().getCors().getUri())
                 .allowedMethods("GET", "POST", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);

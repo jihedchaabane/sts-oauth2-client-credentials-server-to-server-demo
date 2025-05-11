@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.chj.gr.enums.EnumResourceServer;
+import com.chj.gr.properties.CallerDestinationProperties;
+import com.chj.gr.properties.CallerDestinationProperties.DestinationClient;
 import com.chj.gr.utilities.AccessTokenUtil;
 
 @RestController
@@ -20,40 +23,34 @@ public class Ms3CallProtectedMs2Controller {
 	@Autowired
     private RestTemplate restTemplate;
 	
-    @Value("${authorization.server.url}")
+    @Value("${params.oauth2.issuerUri}/oauth2/token")
     private String issuerUri;
     
-    @Value("${params.gateway.uri}")
-    private String apiGatewayUrl;
-  
-    @Value("${authorization.ms1.clientId}")
-    private String ms1ClientId;
-    @Value("${authorization.ms1.clientSecret}")
-    private String ms1ClientSecret;
-    @Value("${authorization.ms1.scopes}")
-    private String ms1Scopes;
-    
-    
-    @Value("${authorization.ms2.clientId}")
-    private String ms2ClientId;
-    @Value("${authorization.ms2.clientSecret}")
-    private String ms2ClientSecret;
-    @Value("${authorization.ms2.scopes}")
-    private String ms2Scopes;
-
+    private CallerDestinationProperties callerDestinationProperties;
+	
+	public Ms3CallProtectedMs2Controller(CallerDestinationProperties callerDestinationProperties) {
+		this.callerDestinationProperties = callerDestinationProperties;
+	}
+	
     /**
      * MS2
      */
-    /** ==> DOIT FONCTIONNER !!!!!!!!!!!!!!!*/
     @GetMapping("/ms2/api/secure/hello")
     public String callMs21Endpoint() {
-        String token = AccessTokenUtil.getAccessToken(restTemplate, issuerUri, ms2ClientId, ms2ClientSecret, ms2Scopes);
+    	DestinationClient destinationClientMs2 = callerDestinationProperties.getDestinationClient(
+    			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_READ_WRITE.getKey());
+    	
+        String token = AccessTokenUtil.getAccessToken(restTemplate, issuerUri, 
+        		destinationClientMs2.getClientId(), 
+        		destinationClientMs2.getClientSecret(), 
+        		destinationClientMs2.getScopes());
+        
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                apiGatewayUrl + "/ms2/api/secure/hello",
+        		destinationClientMs2.getResourceUri() + "/ms2/api/secure/hello",
                 HttpMethod.GET,
                 entity,
                 String.class
@@ -61,19 +58,22 @@ public class Ms3CallProtectedMs2Controller {
         return response.getBody();
     }
     
-    /**
-     * Call ms2 avec (ms1ClientId, ms1ClientSecret).
-     * ==> FONCTIONNE car 'read' est inclut dans 'read write'.
-     */
     @GetMapping("/ms2/api/secure/withClient1")
     public String callMs22Endpoint() {
-        String token = AccessTokenUtil.getAccessToken(restTemplate, issuerUri, ms1ClientId, ms1ClientSecret, ms1Scopes);
+    	DestinationClient destinationClientMs1 = callerDestinationProperties.getDestinationClient(
+    			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_READ_WRITE.getKey());
+    	
+        String token = AccessTokenUtil.getAccessToken(restTemplate, issuerUri, 
+        		destinationClientMs1.getClientId(), 
+        		destinationClientMs1.getClientSecret(), 
+        		destinationClientMs1.getScopes());
+        
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                apiGatewayUrl + "/ms2/api/secure/hello",
+        		destinationClientMs1.getResourceUri() + "/ms2/api/secure/hello",
                 HttpMethod.GET,
                 entity,
                 String.class
@@ -81,19 +81,22 @@ public class Ms3CallProtectedMs2Controller {
         return response.getBody();
     }
     
-    /**
-     * Call ms2 avec des faux scopes.
-     * ==> NE DOIT PAS FONCTIONNER.
-     */
     @GetMapping("/ms2/api/secure/hello/wrong/scopes")
     public String callMs2WrongScopesEndpoint() {
-        String token = AccessTokenUtil.getAccessToken(restTemplate, issuerUri, ms2ClientId, ms2ClientSecret, "scope3");
+    	DestinationClient destinationClientMs2 = callerDestinationProperties.getDestinationClient(
+    			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_READ_WRITE.getKey());
+    	
+        String token = AccessTokenUtil.getAccessToken(restTemplate, issuerUri, 
+        		destinationClientMs2.getClientId(), 
+        		destinationClientMs2.getClientSecret(), 
+        		"scope3");
+        
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                apiGatewayUrl + "/ms2/api/secure/hello",
+        		destinationClientMs2.getResourceUri() + "/ms2/api/secure/hello",
                 HttpMethod.GET,
                 entity,
                 String.class
