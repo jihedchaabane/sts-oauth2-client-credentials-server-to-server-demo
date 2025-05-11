@@ -1,6 +1,7 @@
 package com.chj.gr.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -9,7 +10,8 @@ import com.chj.gr.properties.CallerDestinationProperties;
 import com.chj.gr.properties.CallerDestinationProperties.DestinationClient;
 
 @RestController
-public class ProductPublicController {
+@RequestMapping("/public")
+public class WebClientProductPublicController {
 
     private WebClient webClient;
     
@@ -19,16 +21,12 @@ public class ProductPublicController {
      * - "sts-spring-boot-resource-server uri".
      * @TODO "springboot-conf-gateway-api-oauth2" uri.
      */
-    public ProductPublicController(WebClient webClient, CallerDestinationProperties callerDestinationProperties) {
+    public WebClientProductPublicController(WebClient webClient, CallerDestinationProperties callerDestinationProperties) {
 		this.webClient = webClient;
 		this.callerDestinationProperties = callerDestinationProperties;
 	}
     
-    /**
-     * DOIT FONCTIONNER car /public est permit toujours dans la configuration de sécurité 
-     * de 'sts-spring-boot-resource-server'.
-     */
-    @GetMapping(value = "/public")
+    @GetMapping(value = "/hello1")
     public String getPublic() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_REGISTRATION.getKey());
