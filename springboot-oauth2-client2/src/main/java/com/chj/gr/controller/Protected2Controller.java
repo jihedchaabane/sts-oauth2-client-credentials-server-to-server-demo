@@ -10,12 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 @PreAuthorize("hasAuthority('SCOPE_client2.read')")
 public class Protected2Controller {
 
-//    @GetMapping("/principal")
-//    public String hello(@AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal) {
-//    	
-//        return "Hello from client2! Client ID: " + principal.getAttribute("client_id");
-//    }
-	
 	@GetMapping("/hello")
     public String hello() {
     	

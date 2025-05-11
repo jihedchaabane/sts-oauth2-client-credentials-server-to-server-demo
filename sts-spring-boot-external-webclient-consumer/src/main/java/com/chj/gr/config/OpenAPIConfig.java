@@ -71,7 +71,7 @@ public class OpenAPIConfig {
 		OpenAPI openAPI = new OpenAPI()
 				.info(info)
 				.servers(servers);
-		if (callerDestinationProperties.hasAtLeastOneSecuredClient()) {
+		if (callerDestinationProperties.isSecuredClient("client0")) {
 			openAPI
 			.addSecurityItem(new SecurityRequirement().addList("oauth2"))
             .components(new Components()

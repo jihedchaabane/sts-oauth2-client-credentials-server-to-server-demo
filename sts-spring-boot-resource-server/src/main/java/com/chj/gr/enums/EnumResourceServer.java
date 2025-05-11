@@ -4,7 +4,7 @@ package com.chj.gr.enums;
  * sts-spring-boot-resource-server-*.yml
  */
 public enum EnumResourceServer {
-	STS_SPRING_BOOT_RESOURCE_SERVER_READ_WRITE("client0",  "sts-spring-boot-resource-server-read-write");
+	STS_SPRING_BOOT_RESOURCE_SERVER_REGISTRATION("client0",  "sts-default-registration");
 
     private final String key;
     private final String registrationId;

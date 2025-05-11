@@ -7,12 +7,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.chj.gr.properties.CallerDestinationProperties;
 import com.chj.gr.properties.SwaggerParamsProperties;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.OAuthFlow;
+import io.swagger.v3.oas.models.security.OAuthFlows;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
 
 /**
@@ -28,10 +34,13 @@ public class OpenAPIConfig {
 	private String artifact;
 	
 	private SwaggerParamsProperties swaggerParamsProperties;
+	private CallerDestinationProperties callerDestinationProperties;
 
-	public OpenAPIConfig(SwaggerParamsProperties swaggerParamsProperties) {
+	public OpenAPIConfig(CallerDestinationProperties callerDestinationProperties, SwaggerParamsProperties swaggerParamsProperties) {
+		this.callerDestinationProperties = callerDestinationProperties;
 		this.swaggerParamsProperties = swaggerParamsProperties;
 	}
+
 	@Bean
 	public OpenAPI myOpenAPI() {
 		List<Server> servers = null;
@@ -44,7 +53,6 @@ public class OpenAPIConfig {
 						return server; 
 					}).collect(Collectors.toList());
 		}
-
 		Contact contact = new Contact();
 		contact.setEmail("jihed@gmail.com");
 		contact.setName("Jihed");
@@ -56,10 +64,32 @@ public class OpenAPIConfig {
 				.title("Swagger Management API")
 				.version("0.0.1-SNAPSHOT")
 				.contact(contact)
-				.description("This API exposes endpoints to manage " + artifact + ".")
+				.description("This API exposes endpoints to manage " + artifact.toUpperCase() + ".")
 				.termsOfService("https://www.jihed.com")
 				.license(mitLicense);
-
-		return new OpenAPI().info(info).servers(servers);
+		
+		OpenAPI openAPI = new OpenAPI()
+				.info(info)
+				.servers(servers);
+		if (callerDestinationProperties.isSecuredClient("client0")) {
+			openAPI
+			.addSecurityItem(new SecurityRequirement().addList("oauth2"))
+            .components(new Components()
+                .addSecuritySchemes("oauth2", 
+                		new SecurityScheme()
+                			.type(SecurityScheme.Type.OAUTH2)
+                			.flows(new OAuthFlows()
+                					.clientCredentials(new OAuthFlow()
+                							.tokenUrl(swaggerParamsProperties.getIssuerUri()
+                													.concat("/oauth2/token"))
+                							.scopes(callerDestinationProperties.getSwaggerScopes())
+                					)
+                			)
+                )
+            );
+		}
+		
+	    return openAPI;
+	            
 	}
 }

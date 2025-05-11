@@ -4,7 +4,7 @@ package com.chj.gr.enums;
  * springboot-oauth2-client2-*.yml
  */
 public enum EnumResourceServer {
-	STS_OAUTH2_CLIENT2_RESOURCE_SERVER_READ_WRITE("client0",  "sts-oauth2-client2-resource-server-read-write");
+	STS_DEFAULT_REGISTRATION("client0",  "sts-default-registration");
 
     private final String key;
     private final String registrationId;

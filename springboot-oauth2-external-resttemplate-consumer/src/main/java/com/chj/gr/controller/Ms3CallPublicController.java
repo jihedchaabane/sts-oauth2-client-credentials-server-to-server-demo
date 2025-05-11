@@ -29,7 +29,7 @@ public class Ms3CallPublicController {
 	@GetMapping("/ms1/api/public/hello")
 	public String callMs1Endpoint() {
 		DestinationClient destinationClientMs1 = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_READ_WRITE.getKey());
+    			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_REGISTRATION.getKey());
 		
 		ResponseEntity<String> response = restTemplate.getForObject(
 				destinationClientMs1.getResourceUri() + "/ms1/api/public/hello",
@@ -43,7 +43,7 @@ public class Ms3CallPublicController {
 	@GetMapping("/ms2/api/public/hello")
 	public String callMs12Endpoint() {
 		DestinationClient destinationClientMs2 = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_READ_WRITE.getKey());
+    			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_REGISTRATION.getKey());
 		
 		ResponseEntity<String> response = restTemplate.getForObject(
 				destinationClientMs2.getResourceUri() + "/ms2/api/public/hello",

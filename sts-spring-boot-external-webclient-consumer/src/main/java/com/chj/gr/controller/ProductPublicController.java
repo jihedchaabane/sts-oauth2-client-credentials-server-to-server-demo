@@ -31,7 +31,7 @@ public class ProductPublicController {
     @GetMapping(value = "/public")
     public String getPublic() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_NONE.getKey());
+    			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_REGISTRATION.getKey());
         String responseJson = this.webClient
         		.get()
                 .uri(destinationClient.getResourceUri().concat("/api/public/hello"))

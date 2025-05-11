@@ -16,8 +16,8 @@ import com.chj.gr.properties.CallerDestinationProperties;
 import com.chj.gr.properties.CallerDestinationProperties.DestinationClient;
 
 @RestController
-@RequestMapping("/registration/write")
-public class ProductWriteController {
+@RequestMapping("/registration/read-write")
+public class ProductController {
 
     private WebClient webClient;
     
@@ -27,20 +27,15 @@ public class ProductWriteController {
      * - "sts-spring-boot-resource-server uri".
      * @TODO "springboot-conf-gateway-api-oauth2" uri.
      */
-    public ProductWriteController(WebClient webClient, CallerDestinationProperties callerDestinationProperties) {
+    public ProductController(WebClient webClient, CallerDestinationProperties callerDestinationProperties) {
 		this.webClient = webClient;
 		this.callerDestinationProperties = callerDestinationProperties;
 	}
 
-	/**
-     * Ce client n'a que le scope 'products.read' dans sa configuration.
-     * DOIT FONCTIONNER car "sts-spring-boot-resource-server/api/secure/products/read"
-     * 							==> @PreAuthorize("hasAuthority('SCOPE_products.read')")
-     */
     @GetMapping(value = "/products-read")
     public List<Product> readProducts() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_WRITE.getKey());
+    			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_REGISTRATION.getKey());
         return this.webClient
                 .get()
                 .uri(destinationClient.getResourceUri().concat("/api/secure/products/read"))
@@ -50,15 +45,10 @@ public class ProductWriteController {
                 .block();
     }
     
-    /**
-     * Ce client n'a que le scope 'products.read' dans sa configuration.
-     * NE DOIT PAS FONCTIONNER car "sts-spring-boot-resource-server/api/secure/products/write"
-     * 							==> @PreAuthorize("hasAuthority('SCOPE_products.write')")
-     */
     @GetMapping(value = "/products-write")
     public List<Product> writeProducts() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_WRITE.getKey());
+    			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_REGISTRATION.getKey());
         return this.webClient
                 .get()
                 .uri(destinationClient.getResourceUri().concat("/api/secure/products/write"))

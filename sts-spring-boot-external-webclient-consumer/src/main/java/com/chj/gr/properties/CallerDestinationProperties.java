@@ -25,73 +25,34 @@ public class CallerDestinationProperties {
 		this.destination = destination;
 	}
 	
-	private DestinationClient checkDestinationClient(String key) {
-		Optional<DestinationClient> opClient = Optional.of(this.destination.get(key));
-		DestinationClient destinationClient = opClient.orElseThrow(
-				() -> new RuntimeException("Client to call not fount!"));
-		
-		Optional<String> opResourceUri = opClient.map(DestinationClient::getResourceUri);
-		opResourceUri.orElseThrow(
-				() -> new RuntimeException("Client ResourceUri not provided!"));
-		
-		if (StringUtils.isNotEmpty(destinationClient.getClientId())
-				&& StringUtils.isNotEmpty(destinationClient.getClientSecret())
-				&& StringUtils.isNotEmpty(destinationClient.getRegistrationId())
-		) {
-			Optional<String> opClienId = opClient.map(DestinationClient::getClientId);
-			opClienId.orElseThrow(
-					() -> new RuntimeException("Client ClientId not provided!"));
-			
-			Optional<String> opClientSecret = opClient.map(DestinationClient::getRegistrationId);
-			opClientSecret.orElseThrow(
-					() -> new RuntimeException("Client ClientSecret not provided!"));
-			
-			Optional<String> opRegistrationId = opClient.map(DestinationClient::getRegistrationId);
-			opRegistrationId.orElseThrow(
-					() -> new RuntimeException("Client RegistrationId not provided!"));
-		}
-		return destinationClient;
-	}
 	public DestinationClient getDestinationClient(String key) {
-		DestinationClient DestinationClient = this.checkDestinationClient(key);
-		return DestinationClient;
+		Optional<DestinationClient> opClient = Optional.of(this.destination.get(key));
+		return opClient.isPresent() ? opClient.get() : null;
 	}
 	
-	public boolean hasAtLeastOneSecuredClient() {
-		if (this.destination != null && !this.destination.isEmpty()) {
-			for (Map.Entry<String, DestinationClient> entry : this.destination.entrySet()) {
-				DestinationClient DestinationClient = entry.getValue();
-				if (   StringUtils.isNotEmpty(DestinationClient.getClientId())
-					&& StringUtils.isNotEmpty(DestinationClient.getClientSecret())
-					&& StringUtils.isNotEmpty(DestinationClient.getRegistrationId())) {
-					return true;
-				}
-			}
+	public boolean isSecuredClient(String key) {
+		DestinationClient destinationClient = getDestinationClient(key);
+		if (   destinationClient != null
+			&& StringUtils.isNotEmpty(destinationClient.getClientId())
+			&& StringUtils.isNotEmpty(destinationClient.getClientSecret())
+			&& StringUtils.isNotEmpty(destinationClient.getRegistrationId())
+			&& StringUtils.isNotEmpty(destinationClient.getScopes())) {
+			return true;
 		}
 		return false;
 	}
 	
 	public io.swagger.v3.oas.models.security.Scopes getSwaggerScopes() {
 		io.swagger.v3.oas.models.security.Scopes swaggerScopes = null;
-		if (this.hasAtLeastOneSecuredClient()
-				&& this.destination != null
-				&& !this.destination.isEmpty()) {
-			for (Map.Entry<String, DestinationClient> entry : this.destination.entrySet()) {
-				DestinationClient DestinationClient = entry.getValue();
-				if (StringUtils.isNotEmpty(DestinationClient.getScopes())) {
-					for (Iterator<String> iterator = Arrays.asList(
-							DestinationClient.getScopes().split(",")).iterator(); iterator.hasNext();) {
-						String scope = iterator.next();
-						if (swaggerScopes == null) {
-							swaggerScopes = new io.swagger.v3.oas.models.security.Scopes();
-						}
-						swaggerScopes.addString(
-								scope, new StringBuilder(scope.toUpperCase())
-											.append(" access for [")
-											.append(DestinationClient.getRegistrationId())
-											.append("]").toString());
-					}
+		DestinationClient destinationClient = getDestinationClient("client0");
+		if (destinationClient != null) {
+			for (Iterator<String> iterator = Arrays.asList(
+					destinationClient.getScopes().split(",")).iterator(); iterator.hasNext();) {
+				String scope = iterator.next();
+				if (swaggerScopes == null) {
+					swaggerScopes = new io.swagger.v3.oas.models.security.Scopes();
 				}
+				swaggerScopes.addString(scope, destinationClient.getRegistrationId());
 			}
 		}
 		return swaggerScopes;

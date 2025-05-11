@@ -38,7 +38,7 @@ public class Ms3CallProtectedMs2Controller {
     @GetMapping("/ms2/api/secure/hello")
     public String callMs21Endpoint() {
     	DestinationClient destinationClientMs2 = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_READ_WRITE.getKey());
+    			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_REGISTRATION.getKey());
     	
         String token = AccessTokenUtil.getAccessToken(restTemplate, issuerUri, 
         		destinationClientMs2.getClientId(), 
@@ -61,7 +61,7 @@ public class Ms3CallProtectedMs2Controller {
     @GetMapping("/ms2/api/secure/withClient1")
     public String callMs22Endpoint() {
     	DestinationClient destinationClientMs1 = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_READ_WRITE.getKey());
+    			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_REGISTRATION.getKey());
     	
         String token = AccessTokenUtil.getAccessToken(restTemplate, issuerUri, 
         		destinationClientMs1.getClientId(), 
@@ -84,7 +84,7 @@ public class Ms3CallProtectedMs2Controller {
     @GetMapping("/ms2/api/secure/hello/wrong/scopes")
     public String callMs2WrongScopesEndpoint() {
     	DestinationClient destinationClientMs2 = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_READ_WRITE.getKey());
+    			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_REGISTRATION.getKey());
     	
         String token = AccessTokenUtil.getAccessToken(restTemplate, issuerUri, 
         		destinationClientMs2.getClientId(), 

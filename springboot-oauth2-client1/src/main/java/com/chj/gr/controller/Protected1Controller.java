@@ -43,20 +43,22 @@ public class Protected1Controller {
     
     @GetMapping("/call-client2")
     public String callClient2(JwtAuthenticationToken authentication) {
-    	String accessToken = null;
     	
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_READ_WRITE.getKey());
-        
+    			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_REGISTRATION.getKey());
+    	
+    	String accessToken = null;
     	// Récupérer le client autorisé pour client1
         OAuth2AuthorizedClient authorizedClient = authorizedClientService.loadAuthorizedClient(
-        		destinationClient.getRegistrationId(), authentication.getName()); // dindn't work..
-
+        		destinationClient.getRegistrationId(), authentication.getName()); // @TODO dindn't work..
         if (authorizedClient != null) {
         	// Obtenir le token d'accès
         	// dindn't work..
             accessToken = authorizedClient.getAccessToken().getTokenValue();
-        } else if (authentication.getCredentials() instanceof org.springframework.security.oauth2.jwt.Jwt) {
+        }
+        
+        
+        if (authentication.getCredentials() instanceof org.springframework.security.oauth2.jwt.Jwt) {
         	accessToken = ((org.springframework.security.oauth2.jwt.Jwt) authentication.getCredentials()).getTokenValue();
         } else {
         	return "Erreur: Aucun client OAuth2 autorisé trouvé";

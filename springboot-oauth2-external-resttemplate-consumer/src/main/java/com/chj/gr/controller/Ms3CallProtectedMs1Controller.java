@@ -41,7 +41,7 @@ public class Ms3CallProtectedMs1Controller {
     public String callMs11Endpoint() {
     	
     	DestinationClient destinationClientMs1 = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_READ_WRITE.getKey());
+    			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_REGISTRATION.getKey());
     	
         String token = AccessTokenUtil.getAccessToken(restTemplate, issuerUri, 
         		destinationClientMs1.getClientId(), 
@@ -64,7 +64,7 @@ public class Ms3CallProtectedMs1Controller {
     public String callMs12Endpoint() {
     	
     	DestinationClient destinationClientMs1 = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_READ_WRITE.getKey());
+    			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_REGISTRATION.getKey());
     	
         String token = AccessTokenUtil.getAccessToken(restTemplate, issuerUri, 
         		destinationClientMs1.getClientId(), 
@@ -87,7 +87,7 @@ public class Ms3CallProtectedMs1Controller {
     public String callMs1Forbidden() {
     	
     	DestinationClient destinationClientMs1 = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_READ_WRITE.getKey());
+    			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_REGISTRATION.getKey());
     	
         String token = AccessTokenUtil.getAccessToken(restTemplate, issuerUri, 
         		destinationClientMs1.getClientId(), 
@@ -114,7 +114,7 @@ public class Ms3CallProtectedMs1Controller {
     @GetMapping("/ms1/api/secure/withClient2")
     public String callMs13Endpoint() {
     	DestinationClient destinationClientMs2 = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_READ_WRITE.getKey());
+    			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_REGISTRATION.getKey());
     	
         String token = AccessTokenUtil.getAccessToken(restTemplate, issuerUri, 
         		destinationClientMs2.getClientId(), 
@@ -137,7 +137,7 @@ public class Ms3CallProtectedMs1Controller {
     @GetMapping("/ms1/api/secure/token/wrong/scopes")
     public String callMs1WrongScopesEndpoint() {
     	DestinationClient destinationClientMs1 = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_READ_WRITE.getKey());
+    			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_REGISTRATION.getKey());
     	
         String token = AccessTokenUtil.getAccessToken(restTemplate, issuerUri, 
         		destinationClientMs1.getClientId(), 
