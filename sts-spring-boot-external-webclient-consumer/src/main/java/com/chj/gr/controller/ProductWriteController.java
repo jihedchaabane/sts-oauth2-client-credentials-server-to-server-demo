@@ -16,8 +16,8 @@ import com.chj.gr.properties.CallerDestinationProperties;
 import com.chj.gr.properties.CallerDestinationProperties.DestinationClient;
 
 @RestController
-@RequestMapping("/registration/read-write")
-public class ProductReadWriteController {
+@RequestMapping("/registration/write")
+public class ProductWriteController {
 
     private WebClient webClient;
     
@@ -27,7 +27,7 @@ public class ProductReadWriteController {
      * - "sts-spring-boot-resource-server uri".
      * @TODO "springboot-conf-gateway-api-oauth2" uri.
      */
-    public ProductReadWriteController(WebClient webClient, CallerDestinationProperties callerDestinationProperties) {
+    public ProductWriteController(WebClient webClient, CallerDestinationProperties callerDestinationProperties) {
 		this.webClient = webClient;
 		this.callerDestinationProperties = callerDestinationProperties;
 	}
@@ -40,7 +40,7 @@ public class ProductReadWriteController {
     @GetMapping(value = "/products-read")
     public List<Product> readProducts() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_READ_WRITE.getKey());
+    			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_WRITE.getKey());
         return this.webClient
                 .get()
                 .uri(destinationClient.getResourceUri().concat("/api/secure/products/read"))
@@ -58,7 +58,7 @@ public class ProductReadWriteController {
     @GetMapping(value = "/products-write")
     public List<Product> writeProducts() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_READ_WRITE.getKey());
+    			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_WRITE.getKey());
         return this.webClient
                 .get()
                 .uri(destinationClient.getResourceUri().concat("/api/secure/products/write"))

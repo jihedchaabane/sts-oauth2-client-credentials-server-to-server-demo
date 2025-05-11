@@ -1,4 +1,4 @@
-package com.chj.gr.resource;
+package com.chj.gr.controller;
 
 import java.util.Arrays;
 import java.util.List;

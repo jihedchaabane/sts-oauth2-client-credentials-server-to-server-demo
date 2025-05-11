@@ -1,10 +1,14 @@
 package com.chj.gr.config;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.chj.gr.properties.CallerDestinationProperties;
+import com.chj.gr.properties.SwaggerParamsProperties;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -26,45 +30,29 @@ import io.swagger.v3.oas.models.servers.Server;
 @Configuration
 public class OpenAPIConfig {
 
-	@Value("${app.openapi.local-url}")
-	private String localUrl;
-	
-	@Value("${app.openapi.dev-url}")
-	private String devUrl;
-
-	@Value("${app.openapi.homol-url}")
-	private String homolUrl;
-
-	@Value("${app.openapi.prod-url}")
-	private String prodUrl;
-
 	@Value("${spring.application.name}")
 	private String artifact;
 	
-	@Value("${params.oauth2.issuerUri}")
-	private String issuerUri;
-	
-	@Value("${params.oauth2.scopes}")
-	private String scopes;
+	private SwaggerParamsProperties swaggerParamsProperties;
+	private CallerDestinationProperties callerDestinationProperties;
+
+	public OpenAPIConfig(CallerDestinationProperties callerDestinationProperties, SwaggerParamsProperties swaggerParamsProperties) {
+		this.callerDestinationProperties = callerDestinationProperties;
+		this.swaggerParamsProperties = swaggerParamsProperties;
+	}
 
 	@Bean
 	public OpenAPI myOpenAPI() {
-		Server localServer = new Server();
-		localServer.setUrl(localUrl);
-		localServer.setDescription("Server URL in Local environment");
-		
-		Server devServer = new Server();
-		devServer.setUrl(devUrl);
-		devServer.setDescription("Server URL in Development environment");
-
-		Server homolServer = new Server();
-		homolServer.setUrl(homolUrl);
-		homolServer.setDescription("Server URL in Homologation environment");
-
-		Server prodServer = new Server();
-		prodServer.setUrl(prodUrl);
-		prodServer.setDescription("Server URL in Production environment");
-
+		List<Server> servers = null;
+		if (swaggerParamsProperties != null && swaggerParamsProperties.getServers() != null) {
+			servers = swaggerParamsProperties.getServers().getListe().stream()
+					.map(s -> {
+						Server server = new Server();
+						server.setUrl(s.getUri());
+						server.setDescription(s.getDescription());
+						return server; 
+					}).collect(Collectors.toList());
+		}
 		Contact contact = new Contact();
 		contact.setEmail("jihed@gmail.com");
 		contact.setName("Jihed");
@@ -80,30 +68,28 @@ public class OpenAPIConfig {
 				.termsOfService("https://www.jihed.com")
 				.license(mitLicense);
 		
-		io.swagger.v3.oas.models.security.Scopes swaggerScopes = new io.swagger.v3.oas.models.security.Scopes();
-		if (this.scopes != null && !this.scopes.isEmpty()) {
-			String array[] = this.scopes.split(",");
-			for (int i = 0; i < array.length; i++) {
-				swaggerScopes.addString(
-						array[i], new StringBuilder(array[i].toUpperCase()).append(" access:"
-				).toString());
-			}
+		OpenAPI openAPI = new OpenAPI()
+				.info(info)
+				.servers(servers);
+		if (callerDestinationProperties.hasAtLeastOneSecuredClient()) {
+			openAPI
+			.addSecurityItem(new SecurityRequirement().addList("oauth2"))
+            .components(new Components()
+                .addSecuritySchemes("oauth2", 
+                		new SecurityScheme()
+                			.type(SecurityScheme.Type.OAUTH2)
+                			.flows(new OAuthFlows()
+                					.clientCredentials(new OAuthFlow()
+                							.tokenUrl(swaggerParamsProperties.getIssuerUri()
+                													.concat("/oauth2/token"))
+                							.scopes(callerDestinationProperties.getSwaggerScopes())
+                					)
+                			)
+                )
+            );
 		}
-	    return new OpenAPI()
-	        	.info(info)
-	        	.servers(List.of(localServer, devServer, homolServer, prodServer))
-	            .addSecurityItem(new SecurityRequirement().addList("oauth2"))
-	            .components(new Components()
-	                .addSecuritySchemes("oauth2", 
-	                		new SecurityScheme()
-	                			.type(SecurityScheme.Type.OAUTH2)
-	                			.flows(new OAuthFlows()
-	                					.clientCredentials(new OAuthFlow()
-	                							.tokenUrl(issuerUri.concat("/oauth2/token"))
-	                							.scopes(swaggerScopes)
-	                					)
-	                			)
-	                )
-	            );
+		
+	    return openAPI;
+	            
 	}
 }

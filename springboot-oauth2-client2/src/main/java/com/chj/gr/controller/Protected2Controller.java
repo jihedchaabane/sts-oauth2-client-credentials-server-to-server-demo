@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/secure")
-@PreAuthorize("hasAuthority('SCOPE_read')")
+@PreAuthorize("hasAuthority('SCOPE_client2.read')")
 public class Protected2Controller {
 
 //    @GetMapping("/principal")

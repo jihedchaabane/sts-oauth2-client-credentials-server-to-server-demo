@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/secure")
-@PreAuthorize("hasAuthority('SCOPE_somescope')")
+@PreAuthorize("hasAuthority('SCOPE_client1.somescope')")
 public class Protected1ForbiddenController {
 
 	/**

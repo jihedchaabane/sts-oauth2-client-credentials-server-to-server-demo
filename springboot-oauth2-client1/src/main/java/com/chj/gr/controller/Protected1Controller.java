@@ -15,22 +15,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.chj.gr.enums.EnumResourceServer;
+import com.chj.gr.properties.CallerDestinationProperties;
+import com.chj.gr.properties.CallerDestinationProperties.DestinationClient;
+
 @RestController
 @RequestMapping("/api/secure")
-@PreAuthorize("hasAuthority('SCOPE_read')")
+@PreAuthorize("hasAuthority('SCOPE_client1.read')")
 public class Protected1Controller {
+
+	private CallerDestinationProperties callerDestinationProperties;
+	
+	public Protected1Controller(CallerDestinationProperties callerDestinationProperties) {
+		this.callerDestinationProperties = callerDestinationProperties;
+	}
 
 	@GetMapping("/token")
     public String protectedEndpoint(@RequestHeader("Authorization") String token) {
         return "This is a protected API. Token received: " + token;
     }
 	
-//    @GetMapping("/principal")
-//    public String hello(@AuthenticationPrincipal AuthenticatedPrincipal principal) {
-//        return "Hello from client1! Client ID: " + principal.getName();
-//    }
-    
-    
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;
     
@@ -40,12 +44,17 @@ public class Protected1Controller {
     @GetMapping("/call-client2")
     public String callClient2(JwtAuthenticationToken authentication) {
     	String accessToken = null;
-        // Récupérer le client autorisé pour client1
+    	
+    	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
+    			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_READ_WRITE.getKey());
+        
+    	// Récupérer le client autorisé pour client1
         OAuth2AuthorizedClient authorizedClient = authorizedClientService.loadAuthorizedClient(
-                "client1", authentication.getName()); // dindn't work..
+        		destinationClient.getRegistrationId(), authentication.getName()); // dindn't work..
 
         if (authorizedClient != null) {
         	// Obtenir le token d'accès
+        	// dindn't work..
             accessToken = authorizedClient.getAccessToken().getTokenValue();
         } else if (authentication.getCredentials() instanceof org.springframework.security.oauth2.jwt.Jwt) {
         	accessToken = ((org.springframework.security.oauth2.jwt.Jwt) authentication.getCredentials()).getTokenValue();
@@ -61,7 +70,7 @@ public class Protected1Controller {
         // Appeler l'endpoint sécurisé de client2
         try {
             ResponseEntity<String> response = restTemplate.exchange(
-                    "http://localhost:8082/api/secure/hello",
+            		destinationClient.getResourceUri().concat("/api/secure/hello"),
                     /**
                      * @TODO didn't work yet, i need to check it..
                      */
