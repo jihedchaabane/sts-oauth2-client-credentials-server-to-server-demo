@@ -1,7 +1,7 @@
 package com.chj.gr.enums;
 
 /**
- * sts-spring-boot-external-webclient-consumer-*.yml
+ * ${spring.application.name}-***.yml
  */
 public enum EnumResourceServer {
 	STS_DEFAULT_REGISTRATION   					   ("client0", "sts-default-registration"),

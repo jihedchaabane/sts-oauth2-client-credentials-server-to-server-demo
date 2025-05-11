@@ -1,10 +1,10 @@
 package com.chj.gr.enums;
 
 /**
- * sts-spring-boot-resource-server-*.yml
+ * ${spring.application.name}-***.yml
  */
 public enum EnumResourceServer {
-	STS_SPRING_BOOT_RESOURCE_SERVER_REGISTRATION("client0",  "sts-default-registration");
+	STS_DEFAULT_REGISTRATION("client0",  "sts-default-registration");
 
     private final String key;
     private final String registrationId;
