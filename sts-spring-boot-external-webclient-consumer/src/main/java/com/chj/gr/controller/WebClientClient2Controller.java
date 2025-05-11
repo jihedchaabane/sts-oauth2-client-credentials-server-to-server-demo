@@ -1,5 +1,7 @@
 package com.chj.gr.controller;
 
+import static org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction.clientRegistrationId;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,33 +12,32 @@ import com.chj.gr.properties.CallerDestinationProperties;
 import com.chj.gr.properties.CallerDestinationProperties.DestinationClient;
 
 @RestController
-@RequestMapping("/public/products")
-public class WebClientProductPublicController {
+@RequestMapping("/registration/client2")
+public class WebClientClient2Controller {
 
     private WebClient webClient;
     
     private CallerDestinationProperties callerDestinationProperties;
     
     /**
-     * - "sts-spring-boot-resource-server uri".
-     * @TODO "springboot-conf-gateway-api-oauth2" uri.
+     * - "springboot-oauth2-client1 uri".
+     * @TODO "springboot-oauth2-client1" uri.
      */
-    public WebClientProductPublicController(WebClient webClient, CallerDestinationProperties callerDestinationProperties) {
+    public WebClientClient2Controller(WebClient webClient, CallerDestinationProperties callerDestinationProperties) {
 		this.webClient = webClient;
 		this.callerDestinationProperties = callerDestinationProperties;
 	}
-    
-    @GetMapping(value = "/hello")
-    public String getPublic() {
+
+    @GetMapping(value = "/api/secure/hello")
+    public String readProducts() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_REGISTRATION.getKey());
-        String responseJson = this.webClient
-        		.get()
-                .uri(destinationClient.getResourceUri().concat("/api/public/hello"))
+    			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_REGISTRATION.getKey());
+        return this.webClient
+                .get()
+                .uri(destinationClient.getResourceUri().concat("/api/secure/hello"))
+                .attributes(clientRegistrationId(destinationClient.getRegistrationId()))
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
-        
-        return responseJson;
     }
 }

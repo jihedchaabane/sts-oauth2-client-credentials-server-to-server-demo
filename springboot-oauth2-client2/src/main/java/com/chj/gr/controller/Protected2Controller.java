@@ -13,7 +13,7 @@ public class Protected2Controller {
 	@GetMapping("/hello")
     public String hello() {
     	
-        return "Hello from SECURED client2 ..";
+        return "Hello from SECURED [sts-springboot-oauth2-client2]";
     }
     
 }

@@ -11,6 +11,6 @@ public class Public2Controller {
     @GetMapping("/hello")
     public String hello() {
     	
-        return "Hello from PUBLIC client2..";
+        return "Hello from PUBLIC [sts-springboot-oauth2-client2]";
     }
 }

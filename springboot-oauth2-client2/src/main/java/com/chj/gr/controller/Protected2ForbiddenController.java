@@ -13,7 +13,7 @@ public class Protected2ForbiddenController {
 	@GetMapping("/forbidden")
     public String protectedEndpoint() {
     	
-        return "Hello from SECURED client2 ..";
+        return "Hello from SECURED [sts-springboot-oauth2-client2]";
     }
     
 }

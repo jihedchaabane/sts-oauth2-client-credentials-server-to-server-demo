@@ -10,18 +10,18 @@ import com.chj.gr.properties.CallerDestinationProperties;
 import com.chj.gr.properties.CallerDestinationProperties.DestinationClient;
 
 @RestController
-@RequestMapping("/public/products")
-public class WebClientProductPublicController {
+@RequestMapping("/public/client2")
+public class WebClientClient2PublicController {
 
     private WebClient webClient;
     
     private CallerDestinationProperties callerDestinationProperties;
     
     /**
-     * - "sts-spring-boot-resource-server uri".
+     * - "springboot-oauth2-client1 uri".
      * @TODO "springboot-conf-gateway-api-oauth2" uri.
      */
-    public WebClientProductPublicController(WebClient webClient, CallerDestinationProperties callerDestinationProperties) {
+    public WebClientClient2PublicController(WebClient webClient, CallerDestinationProperties callerDestinationProperties) {
 		this.webClient = webClient;
 		this.callerDestinationProperties = callerDestinationProperties;
 	}
@@ -29,7 +29,7 @@ public class WebClientProductPublicController {
     @GetMapping(value = "/hello")
     public String getPublic() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_REGISTRATION.getKey());
+    			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_REGISTRATION.getKey());
         String responseJson = this.webClient
         		.get()
                 .uri(destinationClient.getResourceUri().concat("/api/public/hello"))

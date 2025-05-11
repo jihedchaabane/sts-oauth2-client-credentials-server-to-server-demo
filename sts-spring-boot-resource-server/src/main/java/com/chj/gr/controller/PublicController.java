@@ -10,6 +10,6 @@ public class PublicController {
 
 	@GetMapping("/hello")
     public String getProducts() {
-        return "Hello for NOT secured endpoint";
+        return "Hello from PUBLIC [sts-spring-boot-resource-server]";
     }
 }

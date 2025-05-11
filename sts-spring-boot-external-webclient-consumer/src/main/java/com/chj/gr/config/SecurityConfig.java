@@ -12,10 +12,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-//                .antMatchers("/products-read/**").permitAll()
-//                .antMatchers("/products-write/**").permitAll()
         		.antMatchers("/public/**").permitAll()
-        		
         		.antMatchers("/swagger-ui/**", "/v2/api-docs/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll();
         return http.build();
     }

@@ -10,7 +10,7 @@ import com.chj.gr.properties.CallerDestinationProperties;
 import com.chj.gr.properties.CallerDestinationProperties.DestinationClient;
 
 @RestController
-@RequestMapping("/public")
+@RequestMapping("/public/client1")
 public class WebClientClient1PublicController {
 
     private WebClient webClient;
@@ -29,7 +29,7 @@ public class WebClientClient1PublicController {
     @GetMapping(value = "/hello")
     public String getPublic() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
-    			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_REGISTRATION.getKey());
+    			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_REGISTRATION.getKey());
         String responseJson = this.webClient
         		.get()
                 .uri(destinationClient.getResourceUri().concat("/api/public/hello"))
