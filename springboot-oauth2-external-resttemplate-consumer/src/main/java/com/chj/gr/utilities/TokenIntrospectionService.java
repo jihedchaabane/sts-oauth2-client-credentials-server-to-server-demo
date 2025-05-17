@@ -42,7 +42,7 @@ public class TokenIntrospectionService {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
         try {
             ResponseEntity<TokenIntrospectionResponse> response = this.restTemplate.postForEntity(
-            		this.serviceParamsProperties.getOauth2().getIssuerUri().concat("/oauth2/introspect"), // URL de l'endpoint d'introspection
+            		this.serviceParamsProperties.getOauth2().getLoadBalancedIssuerUri().concat("/oauth2/introspect"), // URL de l'endpoint d'introspection
                 request,
                 TokenIntrospectionResponse.class
             );

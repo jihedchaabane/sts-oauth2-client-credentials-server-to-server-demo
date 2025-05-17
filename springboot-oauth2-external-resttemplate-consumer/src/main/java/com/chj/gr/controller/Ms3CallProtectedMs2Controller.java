@@ -41,7 +41,7 @@ public class Ms3CallProtectedMs2Controller {
     			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_REGISTRATION.getKey());
     	
         String token = AccessTokenUtil.getAccessToken(this.restTemplate,
-        		this.serviceParamsProperties.getOauth2().getIssuerUri().concat("/oauth2/token"),
+        		this.serviceParamsProperties.getOauth2().getLoadBalancedIssuerUri().concat("/oauth2/token"),
         		destinationClientMs2.getClientId(), 
         		destinationClientMs2.getClientSecret(), 
         		destinationClientMs2.getScopes());
@@ -65,7 +65,7 @@ public class Ms3CallProtectedMs2Controller {
     			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_REGISTRATION.getKey());
     	
         String token = AccessTokenUtil.getAccessToken(restTemplate, 
-        		this.serviceParamsProperties.getOauth2().getIssuerUri().concat("/oauth2/token"),
+        		this.serviceParamsProperties.getOauth2().getLoadBalancedIssuerUri().concat("/oauth2/token"),
         		destinationClientMs1.getClientId(), 
         		destinationClientMs1.getClientSecret(), 
         		destinationClientMs1.getScopes());
@@ -89,7 +89,7 @@ public class Ms3CallProtectedMs2Controller {
     			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_REGISTRATION.getKey());
     	
         String token = AccessTokenUtil.getAccessToken(this.restTemplate, 
-        		this.serviceParamsProperties.getOauth2().getIssuerUri().concat("/oauth2/token"),
+        		this.serviceParamsProperties.getOauth2().getLoadBalancedIssuerUri().concat("/oauth2/token"),
         		destinationClientMs2.getClientId(), 
         		destinationClientMs2.getClientSecret(), 
         		"scope3");
