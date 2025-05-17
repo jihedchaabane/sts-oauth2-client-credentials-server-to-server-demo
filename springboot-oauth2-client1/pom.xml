@@ -20,7 +20,12 @@
     </properties>
 
     <dependencies>
-        <!-- Spring Boot Starters -->
+		<dependency>
+			<groupId>com.chj.gr</groupId>
+			<artifactId>gr-common-configs</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+    	</dependency>
+		<!-- Spring Boot Starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -66,15 +71,8 @@
 			<artifactId>spring-cloud-starter-zipkin</artifactId>
 			<version>2.2.8.RELEASE</version>
 		</dependency>
-		<!--SWAGGER -->
-		<dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>${springdoc.version}</version>
-        </dependency>
-		
 
-        <!-- Testing -->
+		<!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

@@ -1,7 +1,6 @@
 package com.chj.gr.utilities;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -13,15 +12,21 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.chj.gr.model.TokenIntrospectionResponse;
+import com.chj.gr.properties.ServiceParamsProperties;
 
 @Service
 public class TokenIntrospectionService {
 	
-	@Autowired
-    private RestTemplate restTemplate;
-	@Value("${params.oauth2.issuerUri}")
-    private String issuerUri;
+    private final RestTemplate restTemplate;
+	private final ServiceParamsProperties serviceParamsProperties;
 	
+	public TokenIntrospectionService(
+			@Qualifier("restTemplate") RestTemplate restTemplate, 
+			ServiceParamsProperties serviceParamsProperties) {
+		this.restTemplate = restTemplate;
+		this.serviceParamsProperties = serviceParamsProperties;
+	}
+
 	/**
 	 * curl -X POST http://localhost:8764/oauth2/introspect -u client1:secret1 -d "token=MY_ACTIVE_TOKEN"
 	 * curl -X POST http://localhost:8764/oauth2/introspect -u client1:secret1 -d "token=MY_EXPIRED_TOKEN"
@@ -36,8 +41,8 @@ public class TokenIntrospectionService {
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
         try {
-            ResponseEntity<TokenIntrospectionResponse> response = restTemplate.postForEntity(
-            		issuerUri.concat("/oauth2/introspect"), // URL de l'endpoint d'introspection
+            ResponseEntity<TokenIntrospectionResponse> response = this.restTemplate.postForEntity(
+            		this.serviceParamsProperties.getOauth2().getIssuerUri().concat("/oauth2/introspect"), // URL de l'endpoint d'introspection
                 request,
                 TokenIntrospectionResponse.class
             );

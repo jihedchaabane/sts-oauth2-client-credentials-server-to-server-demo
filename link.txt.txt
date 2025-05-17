@@ -1,4 +1,0 @@
-
-https://www.codeburps.com/post/spring-boot-oauth2-for-server-to-server-security 
-https://github.com/nkchauhan003/spring-boot-oauth2-client-credentials-grant-type/tree/main
-

@@ -37,7 +37,7 @@ public class AuthorizationServerConfig {
 
     @Bean
     public RegisteredClientRepository registeredClientRepository() {
-        RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
+        RegisteredClient registeredClient1 = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId("products-client")
                 .clientSecret("{noop}secret")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
@@ -45,8 +45,28 @@ public class AuthorizationServerConfig {
                 .scope("products.read")
                 .scope("products.write")
                 .build();
-
-        return new InMemoryRegisteredClientRepository(registeredClient);
+        
+        RegisteredClient registeredClient2 = RegisteredClient.withId(UUID.randomUUID().toString())
+                .clientId("client1")
+                .clientSecret("{noop}secret1")
+                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+                .scope("client1.read")
+                .scope("client1.write")
+                .scope("client2.read")
+                .scope("client2.write")
+                .build();
+        
+        RegisteredClient registeredClient3 = RegisteredClient.withId(UUID.randomUUID().toString())
+                .clientId("client2")
+                .clientSecret("{noop}secret2")
+                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+                .scope("client2.read")
+                .scope("client2.write")
+                .build();
+        
+        return new InMemoryRegisteredClientRepository(registeredClient1, registeredClient2, registeredClient3);
     }
 
     @Bean

@@ -18,7 +18,7 @@ public class CheckTokenExpirationController {
 	@GetMapping("/introspect")
 	public boolean withAuthServerIntrospectionUri(String accessToken, String clientId, String clientSecret) {
 		
-		return tokenIntrospectionService.isTokenActive(accessToken, clientId, clientSecret);
+		return this.tokenIntrospectionService.isTokenActive(accessToken, clientId, clientSecret);
 	}
 	
 	@GetMapping("/jwt/claims")

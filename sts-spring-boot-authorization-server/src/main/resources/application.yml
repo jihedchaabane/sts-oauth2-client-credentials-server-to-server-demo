@@ -7,3 +7,82 @@ logging:
     org.springframework.web: INFO
     org.springframework.security: INFO
     org.springframework.security.oauth2: INFO
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${params.eureka.uri}
+    fetch-registry: true
+    register-with-eureka: true
+## 'gr-conf-swagger-aggregator' Cors issues fix..
+    # Rafraîchir le registre toutes les X secondes
+    registry-fetch-interval-seconds: ${eureka.fetch.seconds:60}
+  instance:
+    preferIpAddress: true
+    ipAddress: ${host.where.docker.ip}
+    hostname: ${spring.application.name}
+    metadata-map:
+      # Indique que ce microservice doit être inclus dans le swagger de 'gr-conf-swagger-aggregator'
+      # ==> (désactivé par défaut sinon).
+      swagger.aggregator.enabled: ${aggregator.eureka.enabled:false}
+
+
+management:
+  endpoints:
+    # To expose all management endpoints
+    web.exposure.include: "*"
+    # To expose defined endpoints
+    # web.exposure.include: health, caches, env, info, logfile, httptrace, metrics
+    web.base-path: /actuator
+    web.enable.include: health
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+## START : uri de gr-conf-swagger-aggregator
+swagger-params:
+  issuerUri: ${params.oauth2.issuerUri}
+  servers:
+    liste:
+      - uri: http://localhost:${server.port}
+        description: Local environment
+      - uri: http://10.0.0.137:${server.port}
+        description: Development environment
+      - uri: http://10.0.0.500:${server.port}
+        description: Homologation environment
+      - uri: http://10.0.0.500:${server.port}
+        description: Production environment
+  aggregator:
+    enabled: ${aggregator.eureka.enabled:false}
+    cors:
+      uri: http://${host.where.docker.ip}:8765
+
+
+host.where.docker.ip: localhost
+
+params:
+  eureka:
+    uri: http://localhost:8761/eureka/
+  oauth2:
+    issuerUri: http://localhost:8764
+  gateway:
+    uri: http://localhost:8766
+  gatewayOauth2:
+    uri: http://localhost:7766
+  zipkin:
+    uri: http://localhost:9411
+  keystore:
+    type: PKCS12
+    path: file:C:/E/TOOLS/ms2.p12
+    password: jihed123
+    alias: ms2
+  truststore:
+    path: C:/E/TOOLS/ms1-truststore.jks
+    password: jihed1234
+
+
+spring:
+  security:
+    oauth2:
+      authorizationserver:
+        issuer: ${params.oauth2.issuerUri}

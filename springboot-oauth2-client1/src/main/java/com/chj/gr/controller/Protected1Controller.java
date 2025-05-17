@@ -1,6 +1,7 @@
 package com.chj.gr.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -39,6 +40,7 @@ public class Protected1Controller {
     private OAuth2AuthorizedClientService authorizedClientService;
     
     @Autowired
+    @Qualifier("restTemplate")
     private RestTemplate restTemplate;
     
     @GetMapping("/call-client2")
@@ -73,10 +75,6 @@ public class Protected1Controller {
         try {
             ResponseEntity<String> response = restTemplate.exchange(
             		destinationClient.getResourceUri().concat("/api/secure/hello"),
-                    /**
-                     * @TODO didn't work yet, i need to check it..
-                     */
-//            		"http://SPRINGBOOT-OAUTH2-CLIENT2/api/secure/hello",
                     HttpMethod.GET,
                     entity,
                     String.class
