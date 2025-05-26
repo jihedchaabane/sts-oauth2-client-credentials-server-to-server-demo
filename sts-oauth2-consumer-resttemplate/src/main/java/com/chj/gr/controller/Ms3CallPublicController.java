@@ -11,7 +11,7 @@ import com.chj.gr.config.properties.CallerDestinationProperties.DestinationClien
 import com.chj.gr.enums.EnumResourceServer;
 
 @RestController
-@RequestMapping("/springboot-oauth2-external-resttemplate-consumer")
+@RequestMapping("/sts-oauth2-consumer-resttemplate")
 public class Ms3CallPublicController {
 
 	@Autowired

@@ -16,7 +16,7 @@ import com.chj.gr.enums.EnumResourceServer;
 import com.chj.gr.utilities.AccessTokenUtil;
 
 @RestController
-@RequestMapping("/springboot-oauth2-external-resttemplate-consumer")
+@RequestMapping("/sts-oauth2-consumer-resttemplate")
 public class Ms3CallProtectedMs2Controller {
 
 	@Autowired

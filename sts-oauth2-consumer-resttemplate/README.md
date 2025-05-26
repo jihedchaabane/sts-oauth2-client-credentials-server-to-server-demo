@@ -1,4 +1,4 @@
-# springboot-oauth2-external-resttemplate-consumer
+# sts-oauth2-consumer-resttemplate
 -----------------------------------------------------
 IN "10.0.0.137" do:
 -----------------------------------------------------

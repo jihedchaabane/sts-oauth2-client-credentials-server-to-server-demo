@@ -9,7 +9,7 @@ import com.chj.gr.utilities.JwtTokenValidator;
 import com.chj.gr.utilities.TokenIntrospectionService;
 
 @RestController
-@RequestMapping("/springboot-oauth2-external-resttemplate-consumer/token/active")
+@RequestMapping("/sts-oauth2-consumer-resttemplate/token/active")
 public class CheckTokenExpirationController {
 
 	@Autowired

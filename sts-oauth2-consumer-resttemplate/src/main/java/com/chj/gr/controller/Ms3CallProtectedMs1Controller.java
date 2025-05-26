@@ -18,7 +18,7 @@ import com.chj.gr.exceptions.CustomException;
 import com.chj.gr.utilities.AccessTokenUtil;
 
 @RestController
-@RequestMapping("/springboot-oauth2-external-resttemplate-consumer")
+@RequestMapping("/sts-oauth2-consumer-resttemplate")
 public class Ms3CallProtectedMs1Controller {
 
 	@Autowired
