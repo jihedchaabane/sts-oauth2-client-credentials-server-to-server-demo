@@ -32,7 +32,7 @@
 		
 		<module>springboot-oauth2-client1</module>
 		<module>springboot-oauth2-client2</module>
-		<module>springboot-oauth2-external-resttemplate-consumer</module>
+		<module>sts-oauth2-consumer-resttemplate</module>
     </modules>
 	
 </project>

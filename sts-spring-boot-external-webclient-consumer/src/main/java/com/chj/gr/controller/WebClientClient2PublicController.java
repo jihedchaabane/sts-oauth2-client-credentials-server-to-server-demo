@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.chj.gr.config.properties.CallerDestinationProperties;
+import com.chj.gr.config.properties.CallerDestinationProperties.DestinationClient;
 import com.chj.gr.enums.EnumResourceServer;
-import com.chj.gr.properties.CallerDestinationProperties;
-import com.chj.gr.properties.CallerDestinationProperties.DestinationClient;
 
 @RestController
 @RequestMapping("/public/client2")
@@ -17,22 +17,18 @@ public class WebClientClient2PublicController {
     
     private CallerDestinationProperties callerDestinationProperties;
     
-    /**
-     * - "springboot-oauth2-client1 uri".
-     * @TODO "springboot-conf-gateway-api-oauth2" uri.
-     */
     public WebClientClient2PublicController(WebClient webClient, CallerDestinationProperties callerDestinationProperties) {
 		this.webClient = webClient;
 		this.callerDestinationProperties = callerDestinationProperties;
 	}
     
-    @GetMapping(value = "/hello")
+    @GetMapping(value = "/ms11/springboot-oauth2-client2/public/hello")
     public String getPublic() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_REGISTRATION.getKey());
         String responseJson = this.webClient
         		.get()
-                .uri(destinationClient.getResourceUri().concat("/api/public/hello"))
+                .uri(destinationClient.getResourceUri().concat("/ms11/springboot-oauth2-client2/public/hello"))
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();

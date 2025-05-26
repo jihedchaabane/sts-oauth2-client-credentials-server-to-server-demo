@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.chj.gr.config.properties.CallerDestinationProperties;
+import com.chj.gr.config.properties.CallerDestinationProperties.DestinationClient;
 import com.chj.gr.enums.EnumResourceServer;
 import com.chj.gr.model.Product;
-import com.chj.gr.properties.CallerDestinationProperties;
-import com.chj.gr.properties.CallerDestinationProperties.DestinationClient;
 
 @RestController
 @RequestMapping("/registration/product")
@@ -23,35 +23,31 @@ public class WebClientProductController {
     
     private CallerDestinationProperties callerDestinationProperties;
     
-    /**
-     * - "sts-spring-boot-resource-server uri".
-     * @TODO "springboot-conf-gateway-api-oauth2" uri.
-     */
     public WebClientProductController(WebClient webClient, CallerDestinationProperties callerDestinationProperties) {
 		this.webClient = webClient;
 		this.callerDestinationProperties = callerDestinationProperties;
 	}
 
-    @GetMapping(value = "/products-read")
+    @GetMapping(value = "/ms12/sts-spring-boot-resource-server/protected/read")
     public List<Product> readProducts() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_REGISTRATION.getKey());
         return this.webClient
                 .get()
-                .uri(destinationClient.getResourceUri().concat("/api/secure/products/read"))
+                .uri(destinationClient.getResourceUri().concat("/ms12/sts-spring-boot-resource-server/protected/read"))
                 .attributes(clientRegistrationId(destinationClient.getRegistrationId()))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<Product>>() {})
                 .block();
     }
     
-    @GetMapping(value = "/products-write")
+    @GetMapping(value = "/ms12/sts-spring-boot-resource-server/protected/write")
     public List<Product> writeProducts() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_REGISTRATION.getKey());
         return this.webClient
                 .get()
-                .uri(destinationClient.getResourceUri().concat("/api/secure/products/write"))
+                .uri(destinationClient.getResourceUri().concat("/ms12/sts-spring-boot-resource-server/protected/write"))
                 .attributes(clientRegistrationId(destinationClient.getRegistrationId()))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<Product>>() {})

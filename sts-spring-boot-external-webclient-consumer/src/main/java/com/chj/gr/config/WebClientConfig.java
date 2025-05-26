@@ -1,5 +1,7 @@
 package com.chj.gr.config;
 
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
@@ -15,10 +17,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientConfig {
 
 	@Bean
-	WebClient webClient(OAuth2AuthorizedClientManager authorizedClientManager) {
+	@LoadBalanced
+	WebClient webClient(OAuth2AuthorizedClientManager authorizedClientManager,
+    		ReactorLoadBalancerExchangeFilterFunction lbFunction) {
 		ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client =
 				new ServletOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
+		oauth2Client.setDefaultOAuth2AuthorizedClient(true);
 		return WebClient.builder()
+				.filter(lbFunction)
 				.apply(oauth2Client.oauth2Configuration())
 				.build();
 	}
