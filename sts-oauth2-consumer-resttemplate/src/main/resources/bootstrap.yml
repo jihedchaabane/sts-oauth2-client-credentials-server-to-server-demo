@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: springboot-oauth2-external-resttemplate-consumer
+    name: sts-oauth2-consumer-resttemplate
   # Connect to the config server to get the properties
   cloud:
     config:
