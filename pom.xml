@@ -26,9 +26,7 @@
     </properties>
 	
 	
-	<!-- -->
 	<modules>
-		<module>sts-spring-boot-authorization-server</module>
         <module>sts-spring-boot-resource-server</module>
 		<module>sts-spring-boot-external-webclient-consumer</module>
 		
