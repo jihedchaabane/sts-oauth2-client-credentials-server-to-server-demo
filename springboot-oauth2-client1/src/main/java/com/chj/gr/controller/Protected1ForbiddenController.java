@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/secure")
-@PreAuthorize("hasAuthority('SCOPE_client1.somescope')")
+@RequestMapping("/springboot-oauth2-client1/protected")
 public class Protected1ForbiddenController {
 
 	/**
 	 * Provide a wrong scope.
 	 */
 	@GetMapping("/forbidden")
+	@PreAuthorize("hasAuthority('SCOPE_client1.somescope')")
     public String protectedEndpoint() {
         return "Hello from SEURED [sts-springboot-oauth2-client1]";
     }

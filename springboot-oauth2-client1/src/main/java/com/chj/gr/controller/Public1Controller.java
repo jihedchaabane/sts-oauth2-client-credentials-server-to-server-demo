@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/public")
+@RequestMapping("/springboot-oauth2-client1/public")
 public class Public1Controller {
 
     @GetMapping("/hello")

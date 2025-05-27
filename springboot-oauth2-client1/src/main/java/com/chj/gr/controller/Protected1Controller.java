@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.chj.gr.config.properties.CallerDestinationProperties;
+import com.chj.gr.config.properties.CallerDestinationProperties.DestinationClient;
 import com.chj.gr.enums.EnumResourceServer;
-import com.chj.gr.properties.CallerDestinationProperties;
-import com.chj.gr.properties.CallerDestinationProperties.DestinationClient;
+
+import io.swagger.v3.oas.annotations.Parameter;
 
 @RestController
-@RequestMapping("/api/secure")
+@RequestMapping("/springboot-oauth2-client1/protected")
 @PreAuthorize("hasAuthority('SCOPE_client1.read')")
 public class Protected1Controller {
 
@@ -31,7 +33,7 @@ public class Protected1Controller {
 	}
 
 	@GetMapping("/token")
-    public String protectedEndpoint(@RequestHeader("Authorization") String token) {
+    public String protectedEndpoint(@Parameter(hidden = true) @RequestHeader("Authorization") String token) {
         return "This is a protected API. Token received: " + token;
     }
 	
@@ -72,11 +74,7 @@ public class Protected1Controller {
         // Appeler l'endpoint sécurisé de client2
         try {
             ResponseEntity<String> response = restTemplate.exchange(
-            		destinationClient.getResourceUri().concat("/api/secure/hello"),
-                    /**
-                     * @TODO didn't work yet, i need to check it..
-                     */
-//            		"http://SPRINGBOOT-OAUTH2-CLIENT2/api/secure/hello",
+            		destinationClient.getResourceUri().concat("/springboot-oauth2-client2/protected/hello"),
                     HttpMethod.GET,
                     entity,
                     String.class

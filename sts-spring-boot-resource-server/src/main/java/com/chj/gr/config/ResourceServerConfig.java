@@ -13,7 +13,7 @@ public class ResourceServerConfig {
         http
                 .authorizeRequests()
                 
-                .mvcMatchers("/api/public/**").permitAll()
+                .mvcMatchers("/sts-spring-boot-resource-server/public/**").permitAll()
                 .mvcMatchers("/actuator/**").permitAll()
                 .mvcMatchers("/swagger-ui/**", "/v2/api-docs/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll()
 //                .mvcMatchers("/products/**").access("hasAuthority('SCOPE_products.read')")

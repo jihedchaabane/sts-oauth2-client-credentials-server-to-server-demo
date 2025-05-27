@@ -5,14 +5,16 @@ import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chj.gr.model.Product;
 
 @RestController
+@RequestMapping("/sts-spring-boot-resource-server/protected")
 public class ProductController {
 
-    @GetMapping("/api/secure/products/read")
+    @GetMapping("/read")
     @PreAuthorize("hasAuthority('SCOPE_products.read')")
     public List<Product> readScope() {
         return Arrays.asList(
@@ -23,7 +25,7 @@ public class ProductController {
                 });
     }
     
-    @GetMapping("/api/secure/products/write")
+    @GetMapping("/write")
     @PreAuthorize("hasAuthority('SCOPE_products.write')")
     public List<Product> writeScope() {
         return Arrays.asList(

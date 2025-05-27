@@ -6,7 +6,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableWebSecurity
@@ -17,7 +16,7 @@ public class SecurityConfig {
 	    	http
 	        .authorizeRequests()
 	        .antMatchers("/actuator/**").permitAll()
-	        .antMatchers("/api/public/**").permitAll()
+	        .antMatchers("/springboot-oauth2-client2/public/**").permitAll()
 	        .antMatchers("/swagger-ui/**", "/v2/api-docs/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll()
 	        
 	//        .antMatchers("/api/secure/**").access("hasAuthority('SCOPE_client2.read')")
@@ -44,11 +43,6 @@ public class SecurityConfig {
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         return new JwtAuthenticationConverter();
-    }
-    
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
     }
 }
 
