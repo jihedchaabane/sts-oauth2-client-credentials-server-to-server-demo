@@ -24,13 +24,13 @@ public class WebClientClient2Controller {
 		this.callerDestinationProperties = callerDestinationProperties;
 	}
 
-    @GetMapping(value = "/ms11/springboot-oauth2-client2/protected/hello")
+    @GetMapping(value = "/ms11/sts-oauth2-client2-resource/protected/hello")
     public String readProducts() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_REGISTRATION.getKey());
         return this.webClient
                 .get()
-                .uri(destinationClient.getResourceUri().concat("/ms11/springboot-oauth2-client2/protected/hello"))
+                .uri(destinationClient.getResourceUri().concat("/ms11/sts-oauth2-client2-resource/protected/hello"))
                 .attributes(clientRegistrationId(destinationClient.getRegistrationId()))
                 .retrieve()
                 .bodyToMono(String.class)

@@ -31,16 +31,16 @@ http://10.0.0.137:7766/
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 
-# SPRINGBOOT-OAUTH2-CLIENT1
+# STS-OAUTH2-CLIENT1-RESOURCE
 http://10.0.0.137:8081/swagger-ui/index.html
 
-# SPRINGBOOT-OAUTH2-CLIENT2
+# STS-OAUTH2-CLIENT2-RESOURCE
 http://10.0.0.137:8082/swagger-ui/index.html
 
 # STS-OAUTH2-CONSUMER-RESTTEMPLATE
 http://10.0.0.137:8083/swagger-ui/index.html
 
-# STS-SPRING-BOOT-RESOURCE-SERVER
+# STS-OAUTH2-PRODUCTS-RESOURCE
 http://10.0.0.137:7773/swagger-ui/index.html
 
 # STS-OAUTH2-CONSUMER-WEBCLIENT

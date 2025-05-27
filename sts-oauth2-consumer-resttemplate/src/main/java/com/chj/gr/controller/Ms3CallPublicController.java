@@ -25,13 +25,13 @@ public class Ms3CallPublicController {
 	/**
 	 * MS1
 	 */
-	@GetMapping("/ms10/springboot-oauth2-client1/public/hello")
+	@GetMapping("/ms10/sts-oauth2-client1-resource/public/hello")
 	public String callMs1Endpoint() {
 		DestinationClient destinationClientMs1 = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_REGISTRATION.getKey());
 		
 		String response = restTemplate.getForObject(
-				destinationClientMs1.getResourceUri() + "/ms10/springboot-oauth2-client1/public/hello",
+				destinationClientMs1.getResourceUri() + "/ms10/sts-oauth2-client1-resource/public/hello",
 				String.class);
 		return response;
 	}
@@ -39,13 +39,13 @@ public class Ms3CallPublicController {
 	/**
 	 * MS2
 	 */
-	@GetMapping("/ms11/springboot-oauth2-client2/public/hello")
+	@GetMapping("/ms11/sts-oauth2-client2-resource/public/hello")
 	public String callMs12Endpoint() {
 		DestinationClient destinationClientMs2 = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_REGISTRATION.getKey());
 		
 		String response = restTemplate.getForObject(
-				destinationClientMs2.getResourceUri() + "/ms11/springboot-oauth2-client2/public/hello",
+				destinationClientMs2.getResourceUri() + "/ms11/sts-oauth2-client2-resource/public/hello",
 				String.class);
 		return response;
 	}

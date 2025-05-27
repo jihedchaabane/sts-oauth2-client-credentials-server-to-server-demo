@@ -22,13 +22,13 @@ public class WebClientProductPublicController {
 		this.callerDestinationProperties = callerDestinationProperties;
 	}
     
-    @GetMapping(value = "/ms12/sts-spring-boot-resource-server/public/hello")
+    @GetMapping(value = "/ms12/sts-oauth2-products-resource/public/hello")
     public String getPublic() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.STS_SPRING_BOOT_RESOURCE_SERVER_REGISTRATION.getKey());
         String responseJson = this.webClient
         		.get()
-                .uri(destinationClient.getResourceUri().concat("/ms12/sts-spring-boot-resource-server/public/hello"))
+                .uri(destinationClient.getResourceUri().concat("/ms12/sts-oauth2-products-resource/public/hello"))
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();

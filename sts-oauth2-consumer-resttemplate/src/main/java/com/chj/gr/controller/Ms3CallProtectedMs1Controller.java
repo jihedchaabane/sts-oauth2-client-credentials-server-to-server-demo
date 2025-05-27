@@ -36,7 +36,7 @@ public class Ms3CallProtectedMs1Controller {
     /**
      * MS1
      */
-    @GetMapping("/ms10/springboot-oauth2-client1/protected/token")
+    @GetMapping("/ms10/sts-oauth2-client1-resource/protected/token")
     public String callMs10Endpoint1() {
     	
     	DestinationClient destinationClientMs1 = callerDestinationProperties.getDestinationClient(
@@ -51,7 +51,7 @@ public class Ms3CallProtectedMs1Controller {
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
-        		destinationClientMs1.getResourceUri() + "/ms10/springboot-oauth2-client1/protected/token",
+        		destinationClientMs1.getResourceUri() + "/ms10/sts-oauth2-client1-resource/protected/token",
                 HttpMethod.GET,
                 entity,
                 String.class
@@ -59,7 +59,7 @@ public class Ms3CallProtectedMs1Controller {
         return response.getBody();
     }
 
-    @GetMapping("/ms10/springboot-oauth2-client1/protected/call-client2")
+    @GetMapping("/ms10/sts-oauth2-client1-resource/protected/call-client2")
     public String callMs10Endpoint2() {
     	
     	DestinationClient destinationClientMs1 = callerDestinationProperties.getDestinationClient(
@@ -74,7 +74,7 @@ public class Ms3CallProtectedMs1Controller {
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
-        		destinationClientMs1.getResourceUri() + "/ms10/springboot-oauth2-client1/protected/call-client2",
+        		destinationClientMs1.getResourceUri() + "/ms10/sts-oauth2-client1-resource/protected/call-client2",
                 HttpMethod.GET,
                 entity,
                 String.class
@@ -82,7 +82,7 @@ public class Ms3CallProtectedMs1Controller {
         return response.getBody();
     }
     
-    @GetMapping("/ms10/springboot-oauth2-client1/protected/forbidden")
+    @GetMapping("/ms10/sts-oauth2-client1-resource/protected/forbidden")
     public String callMs1Forbidden() {
     	
     	DestinationClient destinationClientMs1 = callerDestinationProperties.getDestinationClient(
@@ -99,7 +99,7 @@ public class Ms3CallProtectedMs1Controller {
         ResponseEntity<String> response = null;
         try {
 	        response = restTemplate.exchange(
-	        		destinationClientMs1.getResourceUri() + "/ms10/springboot-oauth2-client1/protected/forbidden",
+	        		destinationClientMs1.getResourceUri() + "/ms10/sts-oauth2-client1-resource/protected/forbidden",
 	                HttpMethod.GET,
 	                entity,
 	                String.class
@@ -110,7 +110,7 @@ public class Ms3CallProtectedMs1Controller {
         return response.getBody();
     }
 
-    @GetMapping("/ms10/springboot-oauth2-client1/protected/withClient2")
+    @GetMapping("/ms10/sts-oauth2-client1-resource/protected/withClient2")
     public String callMs10Endpoint3() {
     	DestinationClient destinationClientMs2 = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.STS_OAUTH2_CLIENT2_RESOURCE_SERVER_REGISTRATION.getKey());
@@ -124,7 +124,7 @@ public class Ms3CallProtectedMs1Controller {
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
-        		destinationClientMs2.getResourceUri() + "/ms10/springboot-oauth2-client1/protected/token",
+        		destinationClientMs2.getResourceUri() + "/ms10/sts-oauth2-client1-resource/protected/token",
                 HttpMethod.GET,
                 entity,
                 String.class
@@ -133,7 +133,7 @@ public class Ms3CallProtectedMs1Controller {
     }
     
     
-    @GetMapping("/ms10/springboot-oauth2-client1/protected/token/wrong/scopes")
+    @GetMapping("/ms10/sts-oauth2-client1-resource/protected/token/wrong/scopes")
     public String callMs1WrongScopesEndpoint() {
     	DestinationClient destinationClientMs1 = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_REGISTRATION.getKey());
@@ -147,7 +147,7 @@ public class Ms3CallProtectedMs1Controller {
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(
-        		destinationClientMs1.getResourceUri() + "/ms10/springboot-oauth2-client1/protected/token",
+        		destinationClientMs1.getResourceUri() + "/ms10/sts-oauth2-client1-resource/protected/token",
                 HttpMethod.GET,
                 entity,
                 String.class

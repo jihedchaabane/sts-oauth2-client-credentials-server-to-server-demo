@@ -24,26 +24,26 @@ public class WebClientClient1Controller {
 		this.callerDestinationProperties = callerDestinationProperties;
 	}
 
-    @GetMapping(value = "/ms10/springboot-oauth2-client1/protected/token")
+    @GetMapping(value = "/ms10/sts-oauth2-client1-resource/protected/token")
     public String readProducts() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_REGISTRATION.getKey());
         return this.webClient
                 .get()
-                .uri(destinationClient.getResourceUri().concat("/ms10/springboot-oauth2-client1/protected/token"))
+                .uri(destinationClient.getResourceUri().concat("/ms10/sts-oauth2-client1-resource/protected/token"))
                 .attributes(clientRegistrationId(destinationClient.getRegistrationId()))
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
     }
     
-    @GetMapping(value = "/ms10/springboot-oauth2-client1/protected/call-client2")
+    @GetMapping(value = "/ms10/sts-oauth2-client1-resource/protected/call-client2")
     public String writeProducts() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_REGISTRATION.getKey());
         return this.webClient
                 .get()
-                .uri(destinationClient.getResourceUri().concat("/ms10/springboot-oauth2-client1/protected/call-client2"))
+                .uri(destinationClient.getResourceUri().concat("/ms10/sts-oauth2-client1-resource/protected/call-client2"))
                 .attributes(clientRegistrationId(destinationClient.getRegistrationId()))
                 .retrieve()
                 .bodyToMono(String.class)

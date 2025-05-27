@@ -28,7 +28,7 @@ public class WebClientClient1PublicController {
     			EnumResourceServer.STS_OAUTH2_CLIENT1_RESOURCE_SERVER_REGISTRATION.getKey());
         String responseJson = this.webClient
         		.get()
-                .uri(destinationClient.getResourceUri().concat("/ms10/springboot-oauth2-client1/public/hello"))
+                .uri(destinationClient.getResourceUri().concat("/ms10/sts-oauth2-client1-resource/public/hello"))
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
