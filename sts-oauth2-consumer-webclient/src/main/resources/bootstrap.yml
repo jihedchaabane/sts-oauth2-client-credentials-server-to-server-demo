@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: sts-spring-boot-external-webclient-consumer
+    name: sts-oauth2-consumer-webclient
   # Connect to the config server to get the properties
   cloud:
     config:

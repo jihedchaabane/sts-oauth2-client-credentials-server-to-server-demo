@@ -196,11 +196,11 @@
 	</build>
 	
 	<modules>
-        <module>sts-spring-boot-resource-server</module>
-		<module>sts-spring-boot-external-webclient-consumer</module>
-		
+        <module>sts-spring-boot-resource-server</module>	
 		<module>springboot-oauth2-client1</module>
 		<module>springboot-oauth2-client2</module>
+		
+		<module>sts-oauth2-consumer-webclient</module>
 		<module>sts-oauth2-consumer-resttemplate</module>
     </modules>
 	
