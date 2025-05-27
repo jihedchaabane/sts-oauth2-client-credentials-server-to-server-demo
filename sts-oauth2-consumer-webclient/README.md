@@ -1,4 +1,4 @@
-# sts-spring-boot-external-webclient-consumer
+# sts-oauth2-consumer-webclient
 -----------------------------------------------------
 IN "10.0.0.137" do:
 -----------------------------------------------------

@@ -5,11 +5,11 @@ pipeline {
     }
     environment {
 		// Chemin du module Spring Boot
-        MODULE_PATH = 'sts-spring-boot-external-webclient-consumer'
+        MODULE_PATH = 'sts-oauth2-consumer-webclient'
         // Nom de l'image Docker
-        DOCKER_IMAGE = 'jihed123/sts-spring-boot-external-webclient-consumer:0.0.1-SNAPSHOT'
+        DOCKER_IMAGE = 'jihed123/sts-oauth2-consumer-webclient:0.0.1-SNAPSHOT'
         // Nom du conteneur
-        CONTAINER_NAME = 'container-sts-spring-boot-external-webclient-consumer'
+        CONTAINER_NAME = 'container-sts-oauth2-consumer-webclient'
         // Port de l'application
         APP_PORT = '7774'
         // common-network
@@ -42,8 +42,8 @@ pipeline {
 //                    sh '''
 //                        mvn sonar:sonar \
 //                            -Dsonar.java.binaries=. \
-//                            -Dsonar.projectName=sts-spring-boot-external-webclient-consumer \
-//                            -Dsonar.projectKey=sts-spring-boot-external-webclient-consumer
+//                            -Dsonar.projectName=sts-oauth2-consumer-webclient \
+//                            -Dsonar.projectKey=sts-oauth2-consumer-webclient
 //                    '''
 //                }
 //            }

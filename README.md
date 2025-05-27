@@ -43,5 +43,5 @@ http://10.0.0.137:8083/swagger-ui/index.html
 # STS-SPRING-BOOT-RESOURCE-SERVER
 http://10.0.0.137:7773/swagger-ui/index.html
 
-# STS-SPRING-BOOT-EXTERNAL-WEBCLIENT-CONSUMER
+# STS-OAUTH2-CONSUMER-WEBCLIENT
 http://10.0.0.137:7774/swagger-ui/index.html

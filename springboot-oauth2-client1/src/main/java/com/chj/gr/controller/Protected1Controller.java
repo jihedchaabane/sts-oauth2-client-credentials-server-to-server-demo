@@ -19,6 +19,8 @@ import com.chj.gr.config.properties.CallerDestinationProperties;
 import com.chj.gr.config.properties.CallerDestinationProperties.DestinationClient;
 import com.chj.gr.enums.EnumResourceServer;
 
+import io.swagger.v3.oas.annotations.Parameter;
+
 @RestController
 @RequestMapping("/springboot-oauth2-client1/protected")
 @PreAuthorize("hasAuthority('SCOPE_client1.read')")
@@ -31,7 +33,7 @@ public class Protected1Controller {
 	}
 
 	@GetMapping("/token")
-    public String protectedEndpoint(@RequestHeader("Authorization") String token) {
+    public String protectedEndpoint(@Parameter(hidden = true) @RequestHeader("Authorization") String token) {
         return "This is a protected API. Token received: " + token;
     }
 	
