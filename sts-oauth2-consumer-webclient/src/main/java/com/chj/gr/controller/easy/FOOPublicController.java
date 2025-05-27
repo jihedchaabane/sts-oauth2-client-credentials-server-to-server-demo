@@ -36,7 +36,7 @@ public class FOOPublicController {
         return responseJson;
     }
     
-    @GetMapping(value = "/ms6/z-springboot-foo-service/foo-properties")
+    @GetMapping(value = "/ms7/z-springboot-foo-service/foo-properties")
     public String fooProperties() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.FOO_REGISTRATION.getKey());
@@ -50,7 +50,7 @@ public class FOOPublicController {
         return responseJson;
     }
     
-    @GetMapping(value = "/ms6/z-springboot-foo-service/bar")
+    @GetMapping(value = "/ms7/z-springboot-foo-service/bar")
     public String bar() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.FOO_REGISTRATION.getKey());
@@ -64,7 +64,7 @@ public class FOOPublicController {
         return responseJson;
     }
     
-    @GetMapping(value = "/ms6/z-springboot-foo-service/bar-properties")
+    @GetMapping(value = "/ms7/z-springboot-foo-service/bar-properties")
     public String barProperties() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.FOO_REGISTRATION.getKey());
@@ -78,7 +78,7 @@ public class FOOPublicController {
         return responseJson;
     }
     
-    @GetMapping(value = "/ms6/z-springboot-foo-service/hello")
+    @GetMapping(value = "/ms7/z-springboot-foo-service/hello")
     public String hello() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.FOO_REGISTRATION.getKey());
@@ -92,7 +92,7 @@ public class FOOPublicController {
         return responseJson;
     }
     
-    @GetMapping(value = "/ms6/z-springboot-foo-service/helloworld")
+    @GetMapping(value = "/ms7/z-springboot-foo-service/helloworld")
     public String helloworld() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.FOO_REGISTRATION.getKey());
@@ -106,7 +106,7 @@ public class FOOPublicController {
         return responseJson;
     }
     
-    @GetMapping(value = "/ms6/z-springboot-foo-service/helloworld/hello-property")
+    @GetMapping(value = "/ms7/z-springboot-foo-service/helloworld/hello-property")
     public String helloProperty() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.FOO_REGISTRATION.getKey());
@@ -120,7 +120,7 @@ public class FOOPublicController {
         return responseJson;
     }
     
-    @GetMapping(value = "/ms6/z-springboot-foo-service/helloworld/display-properties")
+    @GetMapping(value = "/ms7/z-springboot-foo-service/helloworld/display-properties")
     public String displayProperties() {
     	DestinationClient destinationClient = callerDestinationProperties.getDestinationClient(
     			EnumResourceServer.FOO_REGISTRATION.getKey());
