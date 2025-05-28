@@ -23,25 +23,25 @@ http://10.0.0.137:8763/
 http://10.0.0.137:8764/
 
 # SWAGGER-AGGREGATOR
-http://10.0.0.137:8765/
+http://10.0.0.137:8766/
 
 # GATEWAY-API-OAUTH2
-http://10.0.0.137:7766/
+http://10.0.0.137:8765/
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 
 # STS-OAUTH2-CLIENT1-RESOURCE
-http://10.0.0.137:8081/swagger-ui/index.html
+http://10.0.0.137:7770/swagger-ui/index.html
 
 # STS-OAUTH2-CLIENT2-RESOURCE
-http://10.0.0.137:8082/swagger-ui/index.html
-
-# STS-OAUTH2-CONSUMER-RESTTEMPLATE
-http://10.0.0.137:8083/swagger-ui/index.html
+http://10.0.0.137:7771/swagger-ui/index.html
 
 # STS-OAUTH2-PRODUCTS-RESOURCE
-http://10.0.0.137:7773/swagger-ui/index.html
+http://10.0.0.137:7772/swagger-ui/index.html
 
 # STS-OAUTH2-CONSUMER-WEBCLIENT
+http://10.0.0.137:7773/swagger-ui/index.html
+
+# STS-OAUTH2-CONSUMER-RESTTEMPLATE
 http://10.0.0.137:7774/swagger-ui/index.html

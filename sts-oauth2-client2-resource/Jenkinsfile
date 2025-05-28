@@ -11,7 +11,7 @@ pipeline {
         // Nom du conteneur
         CONTAINER_NAME = 'container-sts-oauth2-client2-resource'
         // Port de l'application
-        APP_PORT = '8082'
+        APP_PORT = '7771'
         // common-network
         DOCKER_NETWORK = 'springboot-network'
         
